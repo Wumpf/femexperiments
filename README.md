@@ -13,3 +13,10 @@ https://en.wikipedia.org/wiki/Soft-body_dynamics
 https://www.youtube.com/watch?v=lrpj3cZrKn4
 * Very good video lectures on FEM  
 https://www.youtube.com/watch?v=sSaUHDQf204&t=2s
+
+## Dependencies
+
+* This is a Unity3D project  
+https://unity3d.com/
+* MathNet  
+https://numerics.mathdotnet.com/

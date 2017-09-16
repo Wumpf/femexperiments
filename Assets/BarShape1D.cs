@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Single;
+using UnityEditor;
 using UnityEngine.Playables;
 
 public class BarShape1D : MonoBehaviour
@@ -34,7 +35,7 @@ public class BarShape1D : MonoBehaviour
 			get { return Thickness * Thickness * (float)Math.PI; }
 		}
 
-        private float GetLength(Node[] nodes)
+        public float GetLength(Node[] nodes)
         {
             return Math.Abs(nodes[RightNodeIdx].Position - nodes[LeftNodeIdx].Position);
         }
@@ -56,6 +57,7 @@ public class BarShape1D : MonoBehaviour
     public Node[] Nodes;
     public Element[] Elements;
     private Vector<float> activeDisplacement;
+    private Vector<float> elementStrains;
 
 
     // Use this for initialization
@@ -68,13 +70,23 @@ public class BarShape1D : MonoBehaviour
         var stiffness = ComputeGlobalStiffnessMatrix();
         var force = ComputeForceVector();
         activeDisplacement = stiffness.Solve(force);
+
+        for (int i = 0; i < Elements.Length; ++i)
+        {
+            var e = Elements[i];
+            float elementLengthInv = 1.0f / e.GetLength(Nodes);
+            elementStrains[i] = e.YoungModulus *
+                                (-elementLengthInv * activeDisplacement[e.LeftNodeIdx] +
+                                  elementLengthInv * activeDisplacement[e.RightNodeIdx]);
+        }
     }
 
     void OnValidate()
     {
 		EnsureValidNodes();
 		EnsureValidElements();
-	}
+        elementStrains = DenseVector.Create(Elements.Length, 0.0f);
+    }
 
     private void EnsureValidNodes()
     {
@@ -152,23 +164,30 @@ public class BarShape1D : MonoBehaviour
 
     void OnDrawGizmos()
     {
-		if (Elements == null)
+        if (Elements == null)
 			return;
 
-		foreach(var e in Elements)
-		{
-		    float posA = Nodes[e.RightNodeIdx].Position;
-		    float posB = Nodes[e.LeftNodeIdx].Position;
+        for (var i = 0; i < Elements.Length; i++)
+        {
+            var e = Elements[i];
+            
+            float posA = Nodes[e.RightNodeIdx].Position;
+            float posB = Nodes[e.LeftNodeIdx].Position;
 
-		    if (activeDisplacement != null)
-		    {
-		        posA += activeDisplacement[e.RightNodeIdx];
-		        posB += activeDisplacement[e.LeftNodeIdx];
-		    }
-		    
-            Gizmos.DrawCube(new Vector3((posA + posB) * 0.5f, 0.0f) + transform.position, 
-                            new Vector3((posA - posB), e.Thickness));
-		    
+            if (activeDisplacement != null)
+            {
+                posA += activeDisplacement[e.RightNodeIdx];
+                posB += activeDisplacement[e.LeftNodeIdx];
+            }
+
+            if (Application.isPlaying)
+            {
+                float stressColorRate = Math.Min(elementStrains[i], 1.0f);
+                Gizmos.color = Color.Lerp(Color.green, Color.red, stressColorRate);
+            }
+
+            Gizmos.DrawCube(new Vector3((posA + posB) * 0.5f, 0.0f) + transform.position,
+                new Vector3((posA - posB), e.Thickness));
         }
     }
 }

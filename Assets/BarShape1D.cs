@@ -21,37 +21,37 @@ public class BarShape1D : MonoBehaviour
     [System.Serializable]
     public class Element
     {
-		public float Thickness;
-		public float YoungModulus;
+        public float Thickness;
+        public float YoungModulus;
 
-		public float DistributedLoad;
+        public float DistributedLoad;
 
         public int LeftNodeIdx;
         public int RightNodeIdx;
 
-		public float CrossSectionalArea
-		{
-			// Assume we are dealing with cylinders.
-			get { return Thickness * Thickness * (float)Math.PI; }
-		}
+        public float CrossSectionalArea
+        {
+            // Assume we are dealing with cylinders.
+            get { return Thickness * Thickness * (float) Math.PI; }
+        }
 
         public float GetLength(Node[] nodes)
         {
             return Math.Abs(nodes[RightNodeIdx].Position - nodes[LeftNodeIdx].Position);
         }
 
-		public Matrix<float> GetStiffnessMatrix(Node[] nodes)
-		{
-			float k = CrossSectionalArea * YoungModulus / GetLength(nodes);
+        public Matrix<float> GetStiffnessMatrix(Node[] nodes)
+        {
+            float k = CrossSectionalArea * YoungModulus / GetLength(nodes);
 
-            return DenseMatrix.OfArray(new float[,] { { k, -k }, { -k, k } });
-		}
+            return DenseMatrix.OfArray(new float[,] {{k, -k}, {-k, k}});
+        }
 
         public Vector<float> GetDistributedLoadVector(Node[] nodes)
-		{
+        {
             float f = 0.5f * DistributedLoad * GetLength(nodes);
-            return DenseVector.OfArray(new float[] { f, f });
-		}
+            return DenseVector.OfArray(new float[] {f, f});
+        }
     }
 
     public Node[] Nodes;
@@ -77,14 +77,14 @@ public class BarShape1D : MonoBehaviour
             float elementLengthInv = 1.0f / e.GetLength(Nodes);
             elementStrains[i] = e.YoungModulus *
                                 (-elementLengthInv * activeDisplacement[e.LeftNodeIdx] +
-                                  elementLengthInv * activeDisplacement[e.RightNodeIdx]);
+                                 elementLengthInv * activeDisplacement[e.RightNodeIdx]);
         }
     }
 
     void OnValidate()
     {
-		EnsureValidNodes();
-		EnsureValidElements();
+        EnsureValidNodes();
+        EnsureValidElements();
         elementStrains = DenseVector.Create(Elements.Length, 0.0f);
     }
 
@@ -94,23 +94,23 @@ public class BarShape1D : MonoBehaviour
             return;
 
         if (Nodes.Length == 1)
-            Nodes = new Node[] { Nodes[0], new Node() };
+            Nodes = new Node[] {Nodes[0], new Node()};
         else if (Nodes.Length == 0)
             Nodes = new Node[2];
-	}
+    }
 
     private void EnsureValidElements()
     {
         if (Elements == null)
             return;
-        
+
         for (int i = 0; i < Elements.Length; ++i)
         {
             if (Elements[i].LeftNodeIdx >= Nodes.Length)
                 Elements[i].LeftNodeIdx = Nodes.Length - 1;
 
-			if (Elements[i].RightNodeIdx >= Nodes.Length)
-				Elements[i].RightNodeIdx = Nodes.Length - 1;
+            if (Elements[i].RightNodeIdx >= Nodes.Length)
+                Elements[i].RightNodeIdx = Nodes.Length - 1;
         }
     }
 
@@ -143,7 +143,7 @@ public class BarShape1D : MonoBehaviour
     private Vector<float> ComputeForceVector()
     {
         Vector<float> forceVector = DenseVector.Create(Nodes.Length, 0.0f);
-        
+
         foreach (var e in Elements)
         {
             var distributedLoadVector = e.GetDistributedLoadVector(Nodes);
@@ -151,7 +151,7 @@ public class BarShape1D : MonoBehaviour
             forceVector[e.RightNodeIdx] += distributedLoadVector[1];
         }
 
-        for (int nodeIdx = 0; nodeIdx<Nodes.Length; ++nodeIdx)
+        for (int nodeIdx = 0; nodeIdx < Nodes.Length; ++nodeIdx)
         {
             if (Nodes[nodeIdx].Fixed)
                 forceVector[nodeIdx] = 0;
@@ -165,12 +165,12 @@ public class BarShape1D : MonoBehaviour
     void OnDrawGizmos()
     {
         if (Elements == null)
-			return;
+            return;
 
         for (var i = 0; i < Elements.Length; i++)
         {
             var e = Elements[i];
-            
+
             float posA = Nodes[e.RightNodeIdx].Position;
             float posB = Nodes[e.LeftNodeIdx].Position;
 

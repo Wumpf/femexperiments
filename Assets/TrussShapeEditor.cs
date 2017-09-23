@@ -16,17 +16,17 @@ class TrussShapeEditor : Editor
             return;
         }
 
-        var targetShapePos = targetShape.transform.position;
-
         GUIStyle style = new GUIStyle();
         style.normal.textColor = Color.green;
-
+        
         // Adding nodes.
         if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Space)
         {
             var mousePosition = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition).origin;
+            Debug.Log(mousePosition);
+            Debug.Log(mousePosition - targetShape.transform.position);
             EditorGUI.BeginChangeCheck();
-            targetShape.Nodes.Add(new TrussShape.Node(mousePosition.To2D()));
+            targetShape.Nodes.Add(new TrussShape.Node(mousePosition - targetShape.transform.position));
             EditorGUI.EndChangeCheck();
             Undo.RecordObject(targetShape, "Add truss node.");
         }
@@ -35,7 +35,7 @@ class TrussShapeEditor : Editor
         for (int i = 0; i < targetShape.Nodes.Count; ++i)
         {
             var node = targetShape.Nodes[i];
-            var pos = node.Position.To3D() + targetShapePos;
+            var pos = targetShape.GetNodeWorldPosition(i);
 
             if (i == selectedNode)
                 Handles.color = Color.red;
@@ -63,11 +63,11 @@ class TrussShapeEditor : Editor
             if (i == selectedNode)
             {
                 EditorGUI.BeginChangeCheck();
-                Vector3 newTargetPosition = Handles.PositionHandle(pos, Quaternion.identity);
+                Vector3 newTargetPosition = Handles.PositionHandle(targetShape.GetNodeWorldPosition(i), Quaternion.identity);
                 if (EditorGUI.EndChangeCheck())
                 {
                     Undo.RecordObject(targetShape, "Change TrussShape node position");
-                    newTargetPosition -= targetShapePos;
+                    newTargetPosition -= targetShape.transform.position;
                     node.Position = new Vector2(newTargetPosition.x, newTargetPosition.y);
                     targetShape.Nodes[i] = node;
                 }

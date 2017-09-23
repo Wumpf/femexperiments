@@ -137,12 +137,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Nodes:
   - Position: 0
+    PointLoad: 0
     Fixed: 1
   - Position: 1
+    PointLoad: 0
     Fixed: 0
   - Position: 3
+    PointLoad: 0
     Fixed: 0
   - Position: 5
+    PointLoad: 0
     Fixed: 0
   Elements:
   - Thickness: 0.27
@@ -172,6 +176,65 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1447566281
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1447566283}
+  - component: {fileID: 1447566282}
+  m_Layer: 0
+  m_Name: TrussShape
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1447566282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1447566281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df956a1f8cacb47c2b40edab605b4282, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Nodes:
+  - Position: {x: 0, y: 0}
+    Fixed: 1
+  - Position: {x: 0, y: 0.5}
+    Fixed: 1
+  - Position: {x: 1, y: 0}
+    Fixed: 0
+  Elements:
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 0
+    RightNodeIdx: 2
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 1
+    RightNodeIdx: 2
+  Forces:
+  - Vector: {x: 0, y: -0.1}
+    NodeIndex: 2
+--- !u!4 &1447566283
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1447566281}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -2.24, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1579315884
 GameObject:
@@ -261,4 +324,221 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1797456916
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1797456918}
+  - component: {fileID: 1797456917}
+  m_Layer: 0
+  m_Name: TrussShape - Large Experimental
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1797456917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1797456916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df956a1f8cacb47c2b40edab605b4282, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Nodes:
+  - Position: {x: 3.9613864, y: 2.737325}
+    Fixed: 0
+  - Position: {x: 3.6232693, y: 3.8175974}
+    Fixed: 0
+  - Position: {x: 2.277451, y: 2.7644162}
+    Fixed: 0
+  - Position: {x: 1.4161484, y: 3.736648}
+    Fixed: 0
+  - Position: {x: 2.6066291, y: 5.119005}
+    Fixed: 0
+  - Position: {x: 0.6897249, y: 3.735976}
+    Fixed: 1
+  - Position: {x: -0.17635298, y: 3.6988583}
+    Fixed: 0
+  - Position: {x: 7.284288, y: 2.6843102}
+    Fixed: 1
+  - Position: {x: 1.1598816, y: 2.795663}
+    Fixed: 0
+  - Position: {x: 0.97644234, y: 4.6544514}
+    Fixed: 0
+  - Position: {x: -2.5271351, y: 3.7112308}
+    Fixed: 1
+  - Position: {x: -2.5147626, y: 2.7585456}
+    Fixed: 1
+  - Position: {x: 7.185307, y: 3.7483482}
+    Fixed: 1
+  - Position: {x: 6.2078767, y: 2.6966827}
+    Fixed: 0
+  - Position: {x: 6.1336417, y: 3.760721}
+    Fixed: 0
+  - Position: {x: 4.9335055, y: 2.7338004}
+    Fixed: 0
+  - Position: {x: 4.9458785, y: 3.8102112}
+    Fixed: 0
+  - Position: {x: 0.05872488, y: 2.7585454}
+    Fixed: 0
+  - Position: {x: -1.0671759, y: 3.7236032}
+    Fixed: 0
+  - Position: {x: -1.0671756, y: 2.8080359}
+    Fixed: 0
+  Elements:
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 0
+    RightNodeIdx: 1
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 0
+    RightNodeIdx: 2
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 2
+    RightNodeIdx: 1
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 3
+    RightNodeIdx: 1
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 3
+    RightNodeIdx: 2
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 4
+    RightNodeIdx: 1
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 4
+    RightNodeIdx: 3
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 5
+    RightNodeIdx: 2
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 3
+    RightNodeIdx: 5
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 10
+    RightNodeIdx: 11
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 11
+    RightNodeIdx: 19
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 19
+    RightNodeIdx: 17
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 17
+    RightNodeIdx: 8
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 8
+    RightNodeIdx: 2
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 10
+    RightNodeIdx: 19
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 18
+    RightNodeIdx: 17
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 6
+    RightNodeIdx: 8
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 10
+    RightNodeIdx: 18
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 18
+    RightNodeIdx: 6
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 6
+    RightNodeIdx: 5
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 0
+    RightNodeIdx: 15
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 15
+    RightNodeIdx: 13
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 13
+    RightNodeIdx: 7
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 1
+    RightNodeIdx: 16
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 16
+    RightNodeIdx: 14
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 14
+    RightNodeIdx: 12
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 0
+    RightNodeIdx: 16
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 15
+    RightNodeIdx: 14
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 13
+    RightNodeIdx: 12
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 9
+    RightNodeIdx: 5
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 9
+    RightNodeIdx: 3
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 9
+    RightNodeIdx: 4
+  - Thickness: 1
+    YoungModulus: 0.5
+    LeftNodeIdx: 12
+    RightNodeIdx: 7
+  Forces:
+  - Vector: {x: 0, y: -0.2}
+    NodeIndex: 2
+--- !u!4 &1797456918
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1797456916}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.35, y: -2.24, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

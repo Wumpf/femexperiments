@@ -120,8 +120,8 @@ public class TrussShape : MonoBehaviour
         {
             if (Nodes[nodeIdx].Fixed)
             {
-                stiffnessMatrix.ClearRow(nodeIdx*2);
-                stiffnessMatrix.ClearRow(nodeIdx*2 + 1);
+                stiffnessMatrix.ClearRows(nodeIdx*2, nodeIdx*2 + 1);
+                stiffnessMatrix.ClearColumns(nodeIdx*2, nodeIdx*2 + 1);
                 stiffnessMatrix[nodeIdx*2, nodeIdx*2] = 1.0f;
                 stiffnessMatrix[nodeIdx*2+1, nodeIdx*2+1] = 1.0f;
             }

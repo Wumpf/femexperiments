@@ -234,7 +234,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1579315884
 GameObject:
@@ -325,220 +325,92 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1797456916
+--- !u!1 &1598263025
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 1797456918}
-  - component: {fileID: 1797456917}
+  - component: {fileID: 1598263027}
+  - component: {fileID: 1598263026}
   m_Layer: 0
-  m_Name: TrussShape - Large Experimental
+  m_Name: 'TrussShape '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1797456917
+  m_IsActive: 1
+--- !u!114 &1598263026
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1797456916}
+  m_GameObject: {fileID: 1598263025}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df956a1f8cacb47c2b40edab605b4282, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Nodes:
-  - Position: {x: 3.9613864, y: 2.737325}
-    Fixed: 0
-  - Position: {x: 3.6232693, y: 3.8175974}
-    Fixed: 0
-  - Position: {x: 2.277451, y: 2.7644162}
-    Fixed: 0
-  - Position: {x: 1.4161484, y: 3.736648}
-    Fixed: 0
-  - Position: {x: 2.6066291, y: 5.119005}
-    Fixed: 0
-  - Position: {x: 0.6897249, y: 3.735976}
+  - Position: {x: 0.000726223, y: -0.00269866}
     Fixed: 1
-  - Position: {x: -0.17635298, y: 3.6988583}
-    Fixed: 0
-  - Position: {x: 7.284288, y: 2.6843102}
+  - Position: {x: -0.07294607, y: 0.77084184}
     Fixed: 1
-  - Position: {x: 1.1598816, y: 2.795663}
+  - Position: {x: 0.95539725, y: 0.76729536}
     Fixed: 0
-  - Position: {x: 0.97644234, y: 4.6544514}
+  - Position: {x: 1.548796, y: 0.7378255}
     Fixed: 0
-  - Position: {x: -2.5271351, y: 3.7112308}
-    Fixed: 1
-  - Position: {x: -2.5147626, y: 2.7585456}
-    Fixed: 1
-  - Position: {x: 7.185307, y: 3.7483482}
-    Fixed: 1
-  - Position: {x: 6.2078767, y: 2.6966827}
+  - Position: {x: 1.5061117, y: 0.042684317}
     Fixed: 0
-  - Position: {x: 6.1336417, y: 3.760721}
-    Fixed: 0
-  - Position: {x: 4.9335055, y: 2.7338004}
-    Fixed: 0
-  - Position: {x: 4.9458785, y: 3.8102112}
-    Fixed: 0
-  - Position: {x: 0.05872488, y: 2.7585454}
-    Fixed: 0
-  - Position: {x: -1.0671759, y: 3.7236032}
-    Fixed: 0
-  - Position: {x: -1.0671756, y: 2.8080359}
+  - Position: {x: 0.85975206, y: 0.03048873}
     Fixed: 0
   Elements:
-  - CrossSectionalArea: 0
-    YoungModulusGPa: 0
-    LeftNodeIdx: 0
-    RightNodeIdx: 1
-  - CrossSectionalArea: 0
-    YoungModulusGPa: 0
+  - CrossSectionalArea: 0.01
+    YoungModulusGPa: 1
     LeftNodeIdx: 0
     RightNodeIdx: 2
-  - CrossSectionalArea: 0
-    YoungModulusGPa: 0
+  - CrossSectionalArea: 0.01
+    YoungModulusGPa: 1
     LeftNodeIdx: 2
     RightNodeIdx: 1
-  - CrossSectionalArea: 0
-    YoungModulusGPa: 0
-    LeftNodeIdx: 3
-    RightNodeIdx: 1
-  - CrossSectionalArea: 0
-    YoungModulusGPa: 0
-    LeftNodeIdx: 3
-    RightNodeIdx: 2
-  - CrossSectionalArea: 0
-    YoungModulusGPa: 0
-    LeftNodeIdx: 4
-    RightNodeIdx: 1
-  - CrossSectionalArea: 0
-    YoungModulusGPa: 0
-    LeftNodeIdx: 4
-    RightNodeIdx: 3
-  - CrossSectionalArea: 0
-    YoungModulusGPa: 0
+  - CrossSectionalArea: 0.01
+    YoungModulusGPa: 1
+    LeftNodeIdx: 5
+    RightNodeIdx: 0
+  - CrossSectionalArea: 0.01
+    YoungModulusGPa: 1
     LeftNodeIdx: 5
     RightNodeIdx: 2
-  - CrossSectionalArea: 0
-    YoungModulusGPa: 0
+  - CrossSectionalArea: 0.01
+    YoungModulusGPa: 1
+    LeftNodeIdx: 5
+    RightNodeIdx: 4
+  - CrossSectionalArea: 0.01
+    YoungModulusGPa: 1
+    LeftNodeIdx: 2
+    RightNodeIdx: 3
+  - CrossSectionalArea: 0.01
+    YoungModulusGPa: 1
     LeftNodeIdx: 3
     RightNodeIdx: 5
-  - CrossSectionalArea: 0
-    YoungModulusGPa: 0
-    LeftNodeIdx: 10
-    RightNodeIdx: 11
-  - CrossSectionalArea: 0
-    YoungModulusGPa: 0
-    LeftNodeIdx: 11
-    RightNodeIdx: 19
-  - CrossSectionalArea: 0
-    YoungModulusGPa: 0
-    LeftNodeIdx: 19
-    RightNodeIdx: 17
-  - CrossSectionalArea: 0
-    YoungModulusGPa: 0
-    LeftNodeIdx: 17
-    RightNodeIdx: 8
-  - CrossSectionalArea: 0
-    YoungModulusGPa: 0
-    LeftNodeIdx: 8
-    RightNodeIdx: 2
-  - CrossSectionalArea: 0
-    YoungModulusGPa: 0
-    LeftNodeIdx: 10
-    RightNodeIdx: 19
-  - CrossSectionalArea: 0
-    YoungModulusGPa: 0
-    LeftNodeIdx: 18
-    RightNodeIdx: 17
-  - CrossSectionalArea: 0
-    YoungModulusGPa: 0
-    LeftNodeIdx: 6
-    RightNodeIdx: 8
-  - CrossSectionalArea: 0
-    YoungModulusGPa: 0
-    LeftNodeIdx: 10
-    RightNodeIdx: 18
-  - CrossSectionalArea: 0
-    YoungModulusGPa: 0
-    LeftNodeIdx: 18
-    RightNodeIdx: 6
-  - CrossSectionalArea: 0
-    YoungModulusGPa: 0
-    LeftNodeIdx: 6
-    RightNodeIdx: 5
-  - CrossSectionalArea: 0
-    YoungModulusGPa: 0
-    LeftNodeIdx: 0
-    RightNodeIdx: 15
-  - CrossSectionalArea: 0
-    YoungModulusGPa: 0
-    LeftNodeIdx: 15
-    RightNodeIdx: 13
-  - CrossSectionalArea: 0
-    YoungModulusGPa: 0
-    LeftNodeIdx: 13
-    RightNodeIdx: 7
-  - CrossSectionalArea: 0
-    YoungModulusGPa: 0
-    LeftNodeIdx: 1
-    RightNodeIdx: 16
-  - CrossSectionalArea: 0
-    YoungModulusGPa: 0
-    LeftNodeIdx: 16
-    RightNodeIdx: 14
-  - CrossSectionalArea: 0
-    YoungModulusGPa: 0
-    LeftNodeIdx: 14
-    RightNodeIdx: 12
-  - CrossSectionalArea: 0
-    YoungModulusGPa: 0
-    LeftNodeIdx: 0
-    RightNodeIdx: 16
-  - CrossSectionalArea: 0
-    YoungModulusGPa: 0
-    LeftNodeIdx: 15
-    RightNodeIdx: 14
-  - CrossSectionalArea: 0
-    YoungModulusGPa: 0
-    LeftNodeIdx: 13
-    RightNodeIdx: 12
-  - CrossSectionalArea: 0
-    YoungModulusGPa: 0
-    LeftNodeIdx: 9
-    RightNodeIdx: 5
-  - CrossSectionalArea: 0
-    YoungModulusGPa: 0
-    LeftNodeIdx: 9
-    RightNodeIdx: 3
-  - CrossSectionalArea: 0
-    YoungModulusGPa: 0
-    LeftNodeIdx: 9
+  - CrossSectionalArea: 0.01
+    YoungModulusGPa: 1
+    LeftNodeIdx: 3
     RightNodeIdx: 4
-  - CrossSectionalArea: 0
-    YoungModulusGPa: 0
-    LeftNodeIdx: 12
-    RightNodeIdx: 7
   Forces:
-  - Vector: {x: 0, y: -0.2}
-    NodeIndex: 2
---- !u!4 &1797456918
+  - Vector: {x: 0, y: -1}
+    NodeIndex: 4
+--- !u!4 &1598263027
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1797456916}
+  m_GameObject: {fileID: 1598263025}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.35, y: -2.24, z: 0.5}
+  m_LocalPosition: {x: 1.83, y: -2.24, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

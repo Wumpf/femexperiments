@@ -26,8 +26,12 @@ public class TrussShape : MonoBehaviour
     [Serializable]
     public class Element
     {
-        public float Thickness = 1.0f;
-        public float YoungModulus = 0.5f;
+        [Tooltip("Area in square meter.")]
+        public float CrossSectionalArea = 0.01f;    // For a rod: Thickness * Thickness * (float) Math.PI;
+        [Tooltip("Describes stiffness of material. Rubber has 0.01-0.1, stell has 209")]
+        public float YoungModulusGPa = 1.0f;
+
+        public float YoungModulus => YoungModulusGPa * 1000000000;
 
         public int LeftNodeIdx;
         public int RightNodeIdx;
@@ -37,9 +41,6 @@ public class TrussShape : MonoBehaviour
             LeftNodeIdx = leftNodeIdx;
             RightNodeIdx = rightNodeIdx;
         }
-        
-        // Assume we are dealing with cylinders.
-        public float CrossSectionalArea => Thickness * Thickness * (float) Math.PI;
         
         public Matrix<float> GetStiffnessMatrix(IList<Node> nodes)
         {

@@ -187,7 +187,7 @@ GameObject:
   - component: {fileID: 1447566283}
   - component: {fileID: 1447566282}
   m_Layer: 0
-  m_Name: TrussShape
+  m_Name: TrussShape - as in video example
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -207,21 +207,21 @@ MonoBehaviour:
   Nodes:
   - Position: {x: 0, y: 0}
     Fixed: 1
-  - Position: {x: 0, y: 0.5}
+  - Position: {x: 0, y: 0.75}
     Fixed: 1
   - Position: {x: 1, y: 0}
     Fixed: 0
   Elements:
-  - Thickness: 1
-    YoungModulus: 0.5
+  - CrossSectionalArea: 0.0001
+    YoungModulusGPa: 0.5
     LeftNodeIdx: 0
     RightNodeIdx: 2
-  - Thickness: 1
-    YoungModulus: 0.5
-    LeftNodeIdx: 1
-    RightNodeIdx: 2
+  - CrossSectionalArea: 0.0001
+    YoungModulusGPa: 0.312
+    LeftNodeIdx: 2
+    RightNodeIdx: 1
   Forces:
-  - Vector: {x: 0, y: -0.1}
+  - Vector: {x: 0, y: -1000}
     NodeIndex: 2
 --- !u!4 &1447566283
 Transform:
@@ -394,136 +394,136 @@ MonoBehaviour:
   - Position: {x: -1.0671756, y: 2.8080359}
     Fixed: 0
   Elements:
-  - Thickness: 1
-    YoungModulus: 0.5
+  - CrossSectionalArea: 0
+    YoungModulusGPa: 0
     LeftNodeIdx: 0
     RightNodeIdx: 1
-  - Thickness: 1
-    YoungModulus: 0.5
+  - CrossSectionalArea: 0
+    YoungModulusGPa: 0
     LeftNodeIdx: 0
     RightNodeIdx: 2
-  - Thickness: 1
-    YoungModulus: 0.5
+  - CrossSectionalArea: 0
+    YoungModulusGPa: 0
     LeftNodeIdx: 2
     RightNodeIdx: 1
-  - Thickness: 1
-    YoungModulus: 0.5
+  - CrossSectionalArea: 0
+    YoungModulusGPa: 0
     LeftNodeIdx: 3
     RightNodeIdx: 1
-  - Thickness: 1
-    YoungModulus: 0.5
+  - CrossSectionalArea: 0
+    YoungModulusGPa: 0
     LeftNodeIdx: 3
     RightNodeIdx: 2
-  - Thickness: 1
-    YoungModulus: 0.5
+  - CrossSectionalArea: 0
+    YoungModulusGPa: 0
     LeftNodeIdx: 4
     RightNodeIdx: 1
-  - Thickness: 1
-    YoungModulus: 0.5
+  - CrossSectionalArea: 0
+    YoungModulusGPa: 0
     LeftNodeIdx: 4
     RightNodeIdx: 3
-  - Thickness: 1
-    YoungModulus: 0.5
+  - CrossSectionalArea: 0
+    YoungModulusGPa: 0
     LeftNodeIdx: 5
     RightNodeIdx: 2
-  - Thickness: 1
-    YoungModulus: 0.5
+  - CrossSectionalArea: 0
+    YoungModulusGPa: 0
     LeftNodeIdx: 3
     RightNodeIdx: 5
-  - Thickness: 1
-    YoungModulus: 0.5
+  - CrossSectionalArea: 0
+    YoungModulusGPa: 0
     LeftNodeIdx: 10
     RightNodeIdx: 11
-  - Thickness: 1
-    YoungModulus: 0.5
+  - CrossSectionalArea: 0
+    YoungModulusGPa: 0
     LeftNodeIdx: 11
     RightNodeIdx: 19
-  - Thickness: 1
-    YoungModulus: 0.5
+  - CrossSectionalArea: 0
+    YoungModulusGPa: 0
     LeftNodeIdx: 19
     RightNodeIdx: 17
-  - Thickness: 1
-    YoungModulus: 0.5
+  - CrossSectionalArea: 0
+    YoungModulusGPa: 0
     LeftNodeIdx: 17
     RightNodeIdx: 8
-  - Thickness: 1
-    YoungModulus: 0.5
+  - CrossSectionalArea: 0
+    YoungModulusGPa: 0
     LeftNodeIdx: 8
     RightNodeIdx: 2
-  - Thickness: 1
-    YoungModulus: 0.5
+  - CrossSectionalArea: 0
+    YoungModulusGPa: 0
     LeftNodeIdx: 10
     RightNodeIdx: 19
-  - Thickness: 1
-    YoungModulus: 0.5
+  - CrossSectionalArea: 0
+    YoungModulusGPa: 0
     LeftNodeIdx: 18
     RightNodeIdx: 17
-  - Thickness: 1
-    YoungModulus: 0.5
+  - CrossSectionalArea: 0
+    YoungModulusGPa: 0
     LeftNodeIdx: 6
     RightNodeIdx: 8
-  - Thickness: 1
-    YoungModulus: 0.5
+  - CrossSectionalArea: 0
+    YoungModulusGPa: 0
     LeftNodeIdx: 10
     RightNodeIdx: 18
-  - Thickness: 1
-    YoungModulus: 0.5
+  - CrossSectionalArea: 0
+    YoungModulusGPa: 0
     LeftNodeIdx: 18
     RightNodeIdx: 6
-  - Thickness: 1
-    YoungModulus: 0.5
+  - CrossSectionalArea: 0
+    YoungModulusGPa: 0
     LeftNodeIdx: 6
     RightNodeIdx: 5
-  - Thickness: 1
-    YoungModulus: 0.5
+  - CrossSectionalArea: 0
+    YoungModulusGPa: 0
     LeftNodeIdx: 0
     RightNodeIdx: 15
-  - Thickness: 1
-    YoungModulus: 0.5
+  - CrossSectionalArea: 0
+    YoungModulusGPa: 0
     LeftNodeIdx: 15
     RightNodeIdx: 13
-  - Thickness: 1
-    YoungModulus: 0.5
+  - CrossSectionalArea: 0
+    YoungModulusGPa: 0
     LeftNodeIdx: 13
     RightNodeIdx: 7
-  - Thickness: 1
-    YoungModulus: 0.5
+  - CrossSectionalArea: 0
+    YoungModulusGPa: 0
     LeftNodeIdx: 1
     RightNodeIdx: 16
-  - Thickness: 1
-    YoungModulus: 0.5
+  - CrossSectionalArea: 0
+    YoungModulusGPa: 0
     LeftNodeIdx: 16
     RightNodeIdx: 14
-  - Thickness: 1
-    YoungModulus: 0.5
+  - CrossSectionalArea: 0
+    YoungModulusGPa: 0
     LeftNodeIdx: 14
     RightNodeIdx: 12
-  - Thickness: 1
-    YoungModulus: 0.5
+  - CrossSectionalArea: 0
+    YoungModulusGPa: 0
     LeftNodeIdx: 0
     RightNodeIdx: 16
-  - Thickness: 1
-    YoungModulus: 0.5
+  - CrossSectionalArea: 0
+    YoungModulusGPa: 0
     LeftNodeIdx: 15
     RightNodeIdx: 14
-  - Thickness: 1
-    YoungModulus: 0.5
+  - CrossSectionalArea: 0
+    YoungModulusGPa: 0
     LeftNodeIdx: 13
     RightNodeIdx: 12
-  - Thickness: 1
-    YoungModulus: 0.5
+  - CrossSectionalArea: 0
+    YoungModulusGPa: 0
     LeftNodeIdx: 9
     RightNodeIdx: 5
-  - Thickness: 1
-    YoungModulus: 0.5
+  - CrossSectionalArea: 0
+    YoungModulusGPa: 0
     LeftNodeIdx: 9
     RightNodeIdx: 3
-  - Thickness: 1
-    YoungModulus: 0.5
+  - CrossSectionalArea: 0
+    YoungModulusGPa: 0
     LeftNodeIdx: 9
     RightNodeIdx: 4
-  - Thickness: 1
-    YoungModulus: 0.5
+  - CrossSectionalArea: 0
+    YoungModulusGPa: 0
     LeftNodeIdx: 12
     RightNodeIdx: 7
   Forces:

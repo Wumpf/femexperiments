@@ -8,7 +8,8 @@ using MathNet.Numerics.LinearAlgebra.Single;
 using UnityEditor;
 using UnityEngine.Playables;
 
-public class BarShape1D : MonoBehaviour
+// Bar shape is a 1D structure consisting of several bars that can experience axial stress.
+public class BarShape : MonoBehaviour
 {
     [System.Serializable]
     public struct Node

@@ -5,8 +5,6 @@ using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Single;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.VR;
-using UnityEngine.VR.WSA;
 
 // A 2D structure whose line elements can experience only axial stress
 public class TrussShape : MonoBehaviour
@@ -93,7 +91,7 @@ public class TrussShape : MonoBehaviour
             GetDirAndLength(nodes, out dir, out length);
 
             var m = Density * CrossSectionalArea * length / 6.0f;
-            var massMatrix1D =  DenseMatrix.OfArray(new[,] {{Density * 2, Density}, {Density, Density * 2}});
+            var massMatrix1D =  DenseMatrix.OfArray(new[,] {{m * 2, m}, {m, m * 2}});
             
             var rotationMatrix = GetRotationMatrix(dir);
             return rotationMatrix * massMatrix1D * rotationMatrix.Transpose();
@@ -140,32 +138,61 @@ public class TrussShape : MonoBehaviour
     [Range(0.0f, 1.0f)]
     public float NewMarkGamma = 0.5f;
     
-    private Vector<float> activeDisplacement = null;
-    private Vector<float> speeds = null;
-    private Vector<float> accelerations = null;
+    private Vector<float> nodeDisplacement = null;
+    private Vector<float> nodeSpeed = null;
+    private Vector<float> nodeAcceleration = null;
 
     void Start()
     {
-        activeDisplacement = DenseVector.Create(Nodes.Count * 2, 0.0f);
-        speeds = DenseVector.Create(Nodes.Count * 2, 0.0f);
-        accelerations = DenseVector.Create(Nodes.Count * 2, 0.0f);
+        nodeDisplacement = DenseVector.Create(Nodes.Count * 2, 0.0f);
+        nodeSpeed = DenseVector.Create(Nodes.Count * 2, 0.0f);
+        nodeAcceleration = DenseVector.Create(Nodes.Count * 2, 0.0f);
     }
     
-    void Update()
+    void FixedUpdate()
     {
         var stiffness = ComputeGlobalStiffnessMatrix();
         var force = ComputeForceVector();
 
         if (Dynamic)
         {
-            //float dT = Time.deltaTime;
-            //float dTSquared = Time.deltaTime * dTSquared;
-            // todo.
+            float dT = Time.fixedDeltaTime;
+
+            var damping = ComputeGlobalDampingMatrix();
+            var mass = ComputeGlobalMassMatrix();
+            
+            // Not sure if this is the right name, but it certainly has a lot to do with inertia.
+            var ineratiaMatrix = 1.0f / (NewMarkBeta * dT * dT) * mass + 
+                                 NewMarkGamma / (NewMarkBeta * dT) * damping;
+
+            // Effective stiffness matrix.
+            stiffness += ineratiaMatrix;
+
+            // Effective force.
+            force += ineratiaMatrix * nodeDisplacement;
+            force += ( 1.0f / (NewMarkBeta * dT) * mass + (NewMarkGamma / NewMarkBeta - 1.0f) * damping) * nodeSpeed;
+            force += ((1.0f / (2.0f * NewMarkBeta) - 1.0f) * mass + (NewMarkGamma / (2.0f * NewMarkBeta) - 1.0f) * dT * damping) * nodeAcceleration;
+            
+            // Solve for new displacement
+            ApplyConstraints(stiffness, force);
+            var nodeDisplacementNew = stiffness.Solve(force);
+            var nodeDisplacementChange = nodeDisplacementNew - nodeDisplacement;
+            
+            // Update speed
+            var nodeSpeedNew = (1.0f - NewMarkGamma / NewMarkBeta) * nodeSpeed +
+                               dT * (1.0f - NewMarkGamma / (2.0f * NewMarkBeta)) * nodeAcceleration +
+                               NewMarkGamma / (NewMarkBeta * dT) * nodeDisplacementChange;
+            // Update accelleration
+            nodeAcceleration = 1.0f / (NewMarkBeta * dT * dT) * (nodeDisplacementChange - dT * nodeSpeed) +
+                              (1.0f - 1.0f / (2.0f * NewMarkBeta)) * nodeAcceleration;
+
+            nodeDisplacement = nodeDisplacementNew;
+            nodeSpeed = nodeSpeedNew;
         }
         else
         {
-            ApplyConstraints(stiffness);
-            stiffness.Solve(force, activeDisplacement);           
+            ApplyConstraints(stiffness, force);
+            stiffness.Solve(force, nodeDisplacement);           
         }
     }
 
@@ -205,7 +232,7 @@ public class TrussShape : MonoBehaviour
         return stiffnessMatrix;
     }
 
-    private void ApplyConstraints(Matrix<float> globalMatrix)
+    private void ApplyConstraints(Matrix<float> globalMatrix, Vector<float> forceVector)
     {
         for (int nodeIdx = 0; nodeIdx < Nodes.Count; ++nodeIdx)
         {
@@ -214,7 +241,10 @@ public class TrussShape : MonoBehaviour
                 globalMatrix.ClearRows(nodeIdx*2, nodeIdx*2 + 1);
                 globalMatrix.ClearColumns(nodeIdx*2, nodeIdx*2 + 1);
                 globalMatrix[nodeIdx*2, nodeIdx*2] = 1.0f;
-                globalMatrix[nodeIdx*2+1, nodeIdx*2+1] = 1.0f;
+                globalMatrix[nodeIdx*2 + 1, nodeIdx*2 + 1] = 1.0f;
+                
+                forceVector[nodeIdx*2] = 0.0f;
+                forceVector[nodeIdx*2 + 1] = 0.0f;
             }
         }
     }
@@ -238,8 +268,8 @@ public class TrussShape : MonoBehaviour
             return Vector2.zero;
         
         var pos = Nodes[nodeIdx].Position + transform.position.To2D();
-        if (activeDisplacement != null)
-            pos += new Vector2(activeDisplacement[nodeIdx * 2], activeDisplacement[nodeIdx * 2 + 1]);
+        if (nodeDisplacement != null)
+            pos += new Vector2(nodeDisplacement[nodeIdx * 2], nodeDisplacement[nodeIdx * 2 + 1]);
         return pos;
     }
 

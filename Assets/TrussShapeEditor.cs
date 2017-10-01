@@ -1,5 +1,7 @@
-﻿using UnityEditor;
+﻿using System;
+using UnityEditor;
 using UnityEngine;
+using System.Linq;
 
 [CustomEditor(typeof(TrussShape))]
 class TrussShapeEditor : Editor
@@ -7,6 +9,35 @@ class TrussShapeEditor : Editor
     private int selectedNode = 0;
 
     public bool ShowLables { get; set; } = false;
+    
+    public float AverageYoungModulus
+    {
+        get { return ((TrussShape)target).Elements.Average(x => x.YoungModulusGPa); }
+        set
+        {
+            foreach (var e in ((TrussShape)target).Elements)
+                e.YoungModulusGPa = value;
+        }
+    }
+    public float AverageDensity
+    {
+        get { return ((TrussShape)target).Elements.Average(x => x.Density); }
+        set
+        {
+            foreach (var e in ((TrussShape)target).Elements)
+                e.Density = value;
+        }
+    }
+    public float AverageDamping
+    {
+        get { return ((TrussShape)target).Elements.Average(x => x.DampingCoefficient); }
+        set
+        {
+            foreach (var e in ((TrussShape)target).Elements)
+                e.DampingCoefficient = value;
+        }
+    }
+    
 
     protected virtual void OnSceneGUI()
     {
@@ -71,6 +102,37 @@ class TrussShapeEditor : Editor
                     node.Position = new Vector2(newTargetPosition.x, newTargetPosition.y);
                     targetShape.Nodes[i] = node;
                 }
+            }
+        }
+    }
+
+    private void ExposeAverageValue(Func<float> get, Action<float> set, string name)
+    {
+        float average = get();
+        float newAverage = EditorGUILayout.FloatField(name, average);
+        if (newAverage != average)
+        {
+            EditorGUI.BeginChangeCheck();
+            set(newAverage);
+            EditorGUI.EndChangeCheck();
+            Undo.RecordObject(target, $"Change {name}.");
+        }
+    }
+
+    private bool averageFoldout = true;
+
+    public override void OnInspectorGUI()
+    {
+        DrawDefaultInspector();
+
+        averageFoldout = EditorGUILayout.Foldout(averageFoldout, "Average Element values");
+        if (averageFoldout)
+        {
+            using (var scope = new EditorGUI.IndentLevelScope(1))
+            {
+                ExposeAverageValue(() => AverageYoungModulus, x => AverageYoungModulus = x, "AverageYoungModulus");
+                ExposeAverageValue(() => AverageDensity, x => AverageDensity = x, "AverageDensity");
+                ExposeAverageValue(() => AverageDamping, x => AverageDamping = x, "AverageDamping");
             }
         }
     }

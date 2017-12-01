@@ -98,7 +98,7 @@ public class TrussShape : MonoBehaviour
         }
 
         /// <summary>
-        /// Daming matrix taking into account the shape function.
+        /// Damping matrix taking into account the shape function.
         /// </summary>
         /// <returns></returns>
         public Matrix<float> GetConsistentDampingMatrix(IList<Node> nodes)
@@ -132,7 +132,14 @@ public class TrussShape : MonoBehaviour
 
     public Force[] Forces = new Force[0];
 
-    public bool Dynamic = true;
+    public enum Animation
+    {
+        DynamicImplicit,
+        DynamicExplicit,
+        Static,
+    }
+    
+    public Animation AnimationMode = Animation.Static;
     [Range(0.0f, 0.5f)]
     public float NewMarkBeta = 0.25f;
     [Range(0.0f, 1.0f)]
@@ -148,51 +155,70 @@ public class TrussShape : MonoBehaviour
         nodeSpeed = DenseVector.Create(Nodes.Count * 2, 0.0f);
         nodeAcceleration = DenseVector.Create(Nodes.Count * 2, 0.0f);
     }
-    
-    void FixedUpdate()
+
+    void UpdateStatic()
     {
         var stiffness = ComputeGlobalStiffnessMatrix();
         var force = ComputeForceVector();
+        ApplyConstraints(stiffness, force);
+        stiffness.Solve(force, nodeDisplacement);   
+    }
 
-        if (Dynamic)
+    void UpdateDynamicExplicit(float dT)
+    {
+        // TODO :)
+        // https://www.youtube.com/watch?v=YqynfK8qwFI&t=202s
+    }
+    
+    void UpdateDynamicImplicit(float dT)
+    {
+        var stiffness = ComputeGlobalStiffnessMatrix();
+        var force = ComputeForceVector();
+        var damping = ComputeGlobalDampingMatrix();
+        var mass = ComputeGlobalMassMatrix();
+            
+        // Not sure if this is the right name, but it certainly has a lot to do with inertia.
+        var ineratiaMatrix = 1.0f / (NewMarkBeta * dT * dT) * mass + 
+                             NewMarkGamma / (NewMarkBeta * dT) * damping;
+
+        // Effective stiffness matrix.
+        stiffness += ineratiaMatrix;
+
+        // Effective force.
+        force += ineratiaMatrix * nodeDisplacement;
+        force += ( 1.0f / (NewMarkBeta * dT) * mass + (NewMarkGamma / NewMarkBeta - 1.0f) * damping) * nodeSpeed;
+        force += ((1.0f / (2.0f * NewMarkBeta) - 1.0f) * mass + (NewMarkGamma / (2.0f * NewMarkBeta) - 1.0f) * dT * damping) * nodeAcceleration;
+            
+        // Solve for new displacement
+        ApplyConstraints(stiffness, force);
+        var nodeDisplacementNew = stiffness.Solve(force);
+        var nodeDisplacementChange = nodeDisplacementNew - nodeDisplacement;
+            
+        // Update speed
+        var nodeSpeedNew = (1.0f - NewMarkGamma / NewMarkBeta) * nodeSpeed +
+                           dT * (1.0f - NewMarkGamma / (2.0f * NewMarkBeta)) * nodeAcceleration +
+                           NewMarkGamma / (NewMarkBeta * dT) * nodeDisplacementChange;
+        // Update accelleration
+        nodeAcceleration = 1.0f / (NewMarkBeta * dT * dT) * (nodeDisplacementChange - dT * nodeSpeed) +
+                           (1.0f - 1.0f / (2.0f * NewMarkBeta)) * nodeAcceleration;
+
+        nodeDisplacement = nodeDisplacementNew;
+        nodeSpeed = nodeSpeedNew;
+    }
+    
+    void FixedUpdate()
+    {
+        switch (AnimationMode)
         {
-            float dT = Time.fixedDeltaTime;
-
-            var damping = ComputeGlobalDampingMatrix();
-            var mass = ComputeGlobalMassMatrix();
-            
-            // Not sure if this is the right name, but it certainly has a lot to do with inertia.
-            var ineratiaMatrix = 1.0f / (NewMarkBeta * dT * dT) * mass + 
-                                 NewMarkGamma / (NewMarkBeta * dT) * damping;
-
-            // Effective stiffness matrix.
-            stiffness += ineratiaMatrix;
-
-            // Effective force.
-            force += ineratiaMatrix * nodeDisplacement;
-            force += ( 1.0f / (NewMarkBeta * dT) * mass + (NewMarkGamma / NewMarkBeta - 1.0f) * damping) * nodeSpeed;
-            force += ((1.0f / (2.0f * NewMarkBeta) - 1.0f) * mass + (NewMarkGamma / (2.0f * NewMarkBeta) - 1.0f) * dT * damping) * nodeAcceleration;
-            
-            // Solve for new displacement
-            ApplyConstraints(stiffness, force);
-            var nodeDisplacementNew = stiffness.Solve(force);
-            var nodeDisplacementChange = nodeDisplacementNew - nodeDisplacement;
-            
-            // Update speed
-            var nodeSpeedNew = (1.0f - NewMarkGamma / NewMarkBeta) * nodeSpeed +
-                               dT * (1.0f - NewMarkGamma / (2.0f * NewMarkBeta)) * nodeAcceleration +
-                               NewMarkGamma / (NewMarkBeta * dT) * nodeDisplacementChange;
-            // Update accelleration
-            nodeAcceleration = 1.0f / (NewMarkBeta * dT * dT) * (nodeDisplacementChange - dT * nodeSpeed) +
-                              (1.0f - 1.0f / (2.0f * NewMarkBeta)) * nodeAcceleration;
-
-            nodeDisplacement = nodeDisplacementNew;
-            nodeSpeed = nodeSpeedNew;
-        }
-        else
-        {
-            ApplyConstraints(stiffness, force);
-            stiffness.Solve(force, nodeDisplacement);           
+            case Animation.DynamicExplicit:
+                UpdateDynamicExplicit(Time.fixedDeltaTime);
+                break;
+            case Animation.DynamicImplicit:
+                UpdateDynamicImplicit(Time.fixedDeltaTime);
+                break;
+            case Animation.Static:
+                UpdateStatic();
+                break;
         }
     }
 

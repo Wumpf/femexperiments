@@ -96,7 +96,17 @@ public class TrussShape : MonoBehaviour
             var rotationMatrix = GetRotationMatrix(dir);
             return rotationMatrix * massMatrix1D * rotationMatrix.Transpose();
         }
+        
+        public Vector<float> GetLumpedMassVector(IList<Node> nodes)
+        {
+            Vector2 dir;
+            float length;
+            GetDirAndLength(nodes, out dir, out length);
 
+            var m = Density * CrossSectionalArea * length / 6.0f;
+            return DenseVector.OfArray(new[] {m, 0, m, 0});
+        }
+        
         /// <summary>
         /// Damping matrix taking into account the shape function.
         /// </summary>
@@ -111,6 +121,11 @@ public class TrussShape : MonoBehaviour
                                                                {DampingCoefficient / 6.0f, DampingCoefficient * 2 / 6.0f}});
             var rotationMatrix = GetRotationMatrix(dir);
             return rotationMatrix * dampingMatrix1d * rotationMatrix.Transpose();
+        }
+        
+        public Vector<float> GetLumpedDampingVector(IList<Node> nodes)
+        {
+            return DenseVector.OfArray(new[] {DampingCoefficient, 0.0f, DampingCoefficient, 0.0f});
         }
     }
 
@@ -302,6 +317,32 @@ public class TrussShape : MonoBehaviour
         }
         
         return matrix;
+    }
+    
+    private Vector<float> ComputeGlobalLumpedMassVector()
+    {
+        return ComputeGlobalVector((e, n) => e.GetLumpedMassVector(n));
+    }
+    private Vector<float> ComputeGlobalLumpedDampingVector()
+    {
+        return ComputeGlobalVector((e, n) => e.GetLumpedDampingVector(n));
+    }
+    
+    private Vector<float> ComputeGlobalVector(Func<Element, IList<Node>, Vector<float>> getElementVectorFunc)
+    {
+        Vector<float> vector = DenseVector.Create(Nodes.Count * 2, 0.0f);
+
+        foreach (var e in Elements)
+        {
+            var elementVector = getElementVectorFunc(e, Nodes);
+            for (int r = 0; r < 4; ++r)
+            {
+                int globalR = (r < 2 ? e.LeftNodeIdx : e.RightNodeIdx) * 2 + r % 2;
+                vector[globalR] += elementVector[r];
+            }
+        }
+        
+        return vector;
     }
 
     private void ApplyConstraints(Matrix<float> matrix)

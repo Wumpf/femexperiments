@@ -160,7 +160,8 @@ public class TrussShape : MonoBehaviour
     {
         var stiffness = ComputeGlobalStiffnessMatrix();
         var force = ComputeForceVector();
-        ApplyConstraints(stiffness, force);
+        ApplyConstraints(stiffness);
+        ApplyConstraints(force);
         stiffness.Solve(force, nodeDisplacement);   
     }
 
@@ -172,10 +173,11 @@ public class TrussShape : MonoBehaviour
     
     void UpdateDynamicImplicit(float dT)
     {
+        // https://www.youtube.com/watch?v=BBzHdHgqxfE&t=714s - Schuster Engineering, FEA 21: Transient Implicit
         var stiffness = ComputeGlobalStiffnessMatrix();
         var force = ComputeForceVector();
-        var damping = ComputeGlobalDampingMatrix();
-        var mass = ComputeGlobalMassMatrix();
+        var damping = ComputeGlobalConsistentDampingMatrix();
+        var mass = ComputeGlobalConsistentMassMatrix();
             
         // Not sure if this is the right name, but it certainly has a lot to do with inertia.
         var ineratiaMatrix = 1.0f / (NewMarkBeta * dT * dT) * mass + 
@@ -190,7 +192,8 @@ public class TrussShape : MonoBehaviour
         force += ((1.0f / (2.0f * NewMarkBeta) - 1.0f) * mass + (NewMarkGamma / (2.0f * NewMarkBeta) - 1.0f) * dT * damping) * nodeAcceleration;
             
         // Solve for new displacement
-        ApplyConstraints(stiffness, force);
+        ApplyConstraints(stiffness);
+        ApplyConstraints(force);
         var nodeDisplacementNew = stiffness.Solve(force);
         var nodeDisplacementChange = nodeDisplacementNew - nodeDisplacement;
             
@@ -211,7 +214,7 @@ public class TrussShape : MonoBehaviour
         switch (AnimationMode)
         {
             case Animation.DynamicExplicit:
-                UpdateDynamicExplicit(Time.fixedDeltaTime);
+                UpdateDynamicExplicit_Consistent(Time.fixedDeltaTime);
                 break;
             case Animation.DynamicImplicit:
                 UpdateDynamicImplicit(Time.fixedDeltaTime);
@@ -226,22 +229,22 @@ public class TrussShape : MonoBehaviour
     {
         return ComputeGlobalMatrix((e, n) => e.GetStiffnessMatrix(n));
     }
-    private Matrix<float> ComputeGlobalMassMatrix()
+    private Matrix<float> ComputeGlobalConsistentMassMatrix()
     {
         return ComputeGlobalMatrix((e, n) => e.GetConsistentMassMatrix(n));
     }
-    private Matrix<float> ComputeGlobalDampingMatrix()
+    private Matrix<float> ComputeGlobalConsistentDampingMatrix()
     {
         return ComputeGlobalMatrix((e, n) => e.GetConsistentDampingMatrix(n));
     }
     
     private Matrix<float> ComputeGlobalMatrix(Func<Element, IList<Node>, Matrix<float>> getElementMatrixFunc)
     {
-        Matrix<float> stiffnessMatrix = DenseMatrix.Create(Nodes.Count * 2, Nodes.Count * 2, 0.0f);
+        Matrix<float> matrix = DenseMatrix.Create(Nodes.Count * 2, Nodes.Count * 2, 0.0f);
 
         foreach (var e in Elements)
         {
-            var stiffnessElementMatrix = getElementMatrixFunc(e, Nodes);
+            var elementMatrix = getElementMatrixFunc(e, Nodes);
 
             for (int r = 0; r < 4; ++r)
             {
@@ -250,27 +253,36 @@ public class TrussShape : MonoBehaviour
                 {
                     int globalC = (c < 2 ? e.LeftNodeIdx : e.RightNodeIdx) * 2 + c % 2;
                     
-                    stiffnessMatrix[globalR, globalC] += stiffnessElementMatrix[r, c];
+                    matrix[globalR, globalC] += elementMatrix[r, c];
                 }
             }
         }
         
-        return stiffnessMatrix;
+        return matrix;
     }
 
-    private void ApplyConstraints(Matrix<float> globalMatrix, Vector<float> forceVector)
+    private void ApplyConstraints(Matrix<float> matrix)
     {
         for (int nodeIdx = 0; nodeIdx < Nodes.Count; ++nodeIdx)
         {
             if (Nodes[nodeIdx].Fixed)
             {
-                globalMatrix.ClearRows(nodeIdx*2, nodeIdx*2 + 1);
-                globalMatrix.ClearColumns(nodeIdx*2, nodeIdx*2 + 1);
-                globalMatrix[nodeIdx*2, nodeIdx*2] = 1.0f;
-                globalMatrix[nodeIdx*2 + 1, nodeIdx*2 + 1] = 1.0f;
-                
-                forceVector[nodeIdx*2] = 0.0f;
-                forceVector[nodeIdx*2 + 1] = 0.0f;
+                matrix.ClearRows(nodeIdx*2, nodeIdx*2 + 1);
+                matrix.ClearColumns(nodeIdx*2, nodeIdx*2 + 1);
+                matrix[nodeIdx*2, nodeIdx*2] = 1.0f;
+                matrix[nodeIdx*2 + 1, nodeIdx*2 + 1] = 1.0f;
+            }
+        }
+    }
+    
+    private void ApplyConstraints(Vector<float> vector)
+    {
+        for (int nodeIdx = 0; nodeIdx < Nodes.Count; ++nodeIdx)
+        {
+            if (Nodes[nodeIdx].Fixed)
+            {
+                vector[nodeIdx*2] = 0.0f;
+                vector[nodeIdx*2 + 1] = 0.0f;
             }
         }
     }

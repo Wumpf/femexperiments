@@ -146,11 +146,19 @@ public class TrussShape : MonoBehaviour
     public float NewMarkGamma = 0.5f;
     
     private Vector<float> nodeDisplacement = null;
+    private Vector<float> nodeDisplacementOld = null;
     private Vector<float> nodeSpeed = null;
     private Vector<float> nodeAcceleration = null;
 
     void Start()
     {
+        // Estimate d_-1 using euler time formula. F=ma => a = F/m
+        var test = ComputeGlobalConsistentMassMatrix();
+        ApplyConstraints(test);
+        var startupAcceleration = test.Solve(ComputeForceVector()); 
+        nodeDisplacementOld = startupAcceleration * (Time.fixedDeltaTime * Time.fixedDeltaTime * 0.5f);        
+        ApplyConstraints(nodeDisplacementOld);
+        
         nodeDisplacement = DenseVector.Create(Nodes.Count * 2, 0.0f);
         nodeSpeed = DenseVector.Create(Nodes.Count * 2, 0.0f);
         nodeAcceleration = DenseVector.Create(Nodes.Count * 2, 0.0f);
@@ -165,10 +173,45 @@ public class TrussShape : MonoBehaviour
         stiffness.Solve(force, nodeDisplacement);   
     }
 
-    void UpdateDynamicExplicit(float dT)
+    // For all dynamic systems keep this simply equation in mind:
+    //
+    // mass * accelleration + damping * speed + stiffness * displacement = force
+    //
+    // Note that: 
+    // * acceleration = displacement''
+    // * speed = displacement'
+    
+    void UpdateDynamicExplicit_Consistent(float dT)
     {
-        // TODO :)
-        // https://www.youtube.com/watch?v=YqynfK8qwFI&t=202s
+        // https://www.youtube.com/watch?v=YqynfK8qwFI&t=202s - Schuster Engineering, FEA 22: Transient Explicit
+        var stiffness = ComputeGlobalStiffnessMatrix();
+        var force = ComputeForceVector();
+        var damping = ComputeGlobalConsistentDampingMatrix();
+        var mass = ComputeGlobalConsistentMassMatrix();
+
+        const int numIterations = 10;
+        dT /= numIterations;
+        for (int i = 0; i < numIterations; ++i)
+        {
+            float dTInvSq = 1.0f / (dT * dT);
+            float dTInv2 = 1.0f / (dT * 2.0f);
+
+            // "left hand"
+            var leftHand = dTInvSq * mass + dTInv2 * damping; // not sure what to call a mass + damping thing
+
+            // "right hand"
+            var currentContrib = ((2.0f * dTInvSq) * mass - stiffness) * nodeDisplacement;
+            var pastContrib = (dTInvSq * mass - dTInv2 * damping) * nodeDisplacementOld;
+            var rightHand = force + currentContrib - pastContrib; // not sure what to call a ... whatever that is
+
+            // solve!
+            ApplyConstraints(rightHand);
+            ApplyConstraints(leftHand);
+            nodeDisplacementOld = nodeDisplacement;
+            nodeDisplacement = leftHand.Solve(rightHand);
+        }
+
+        // computing displacement and speed directly from this requires some thought (it's in there!), but can of course always be done using central differences.
     }
     
     void UpdateDynamicImplicit(float dT)

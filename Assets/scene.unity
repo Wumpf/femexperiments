@@ -572,6 +572,7 @@ Transform:
   m_Children:
   - {fileID: 2065101089}
   - {fileID: 1598263027}
+  - {fileID: 2065964617}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -684,7 +685,7 @@ GameObject:
   - component: {fileID: 1447566283}
   - component: {fileID: 1447566282}
   m_Layer: 0
-  m_Name: TrussShape Reference - as in video example
+  m_Name: TrussShape Reference - static, as in video example
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -901,7 +902,7 @@ GameObject:
   - component: {fileID: 1598263027}
   - component: {fileID: 1598263026}
   m_Layer: 0
-  m_Name: TrussShape Complex
+  m_Name: TrussShape Complex - static
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1207,13 +1208,13 @@ MonoBehaviour:
   Elements:
   - CrossSectionalArea: 0.0001
     YoungModulusGPa: 0.5
-    Density: 10
+    Density: 1000
     DampingCoefficient: 50
     LeftNodeIdx: 0
     RightNodeIdx: 2
   - CrossSectionalArea: 0.0001
     YoungModulusGPa: 0.312
-    Density: 10
+    Density: 1000
     DampingCoefficient: 50
     LeftNodeIdx: 2
     RightNodeIdx: 1
@@ -1246,7 +1247,7 @@ GameObject:
   - component: {fileID: 2065101089}
   - component: {fileID: 2065101088}
   m_Layer: 0
-  m_Name: TrussShape Complex Dynamic
+  m_Name: TrussShape Complex - dynamic implicit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1344,6 +1345,114 @@ Transform:
   m_Father: {fileID: 761514552}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2065964616
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 2065964617}
+  - component: {fileID: 2065964618}
+  m_Layer: 0
+  m_Name: TrussShape Complex - dynamic explicit
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &2065964617
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2065964616}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.84, y: -2.2871683, z: -2.1601562}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 761514552}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2065964618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2065964616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df956a1f8cacb47c2b40edab605b4282, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Nodes:
+  - Position: {x: 0.000726223, y: -0.00269866}
+    Fixed: 1
+  - Position: {x: -0.07294607, y: 0.77084184}
+    Fixed: 1
+  - Position: {x: 0.95539725, y: 0.76729536}
+    Fixed: 0
+  - Position: {x: 1.548796, y: 0.7378255}
+    Fixed: 0
+  - Position: {x: 1.5061117, y: 0.042684317}
+    Fixed: 0
+  - Position: {x: 0.85975206, y: 0.03048873}
+    Fixed: 0
+  Elements:
+  - CrossSectionalArea: 0.01
+    YoungModulusGPa: 0.1
+    Density: 40000
+    DampingCoefficient: 500
+    LeftNodeIdx: 0
+    RightNodeIdx: 2
+  - CrossSectionalArea: 0.01
+    YoungModulusGPa: 0.1
+    Density: 40000
+    DampingCoefficient: 500
+    LeftNodeIdx: 2
+    RightNodeIdx: 1
+  - CrossSectionalArea: 0.01
+    YoungModulusGPa: 0.1
+    Density: 40000
+    DampingCoefficient: 500
+    LeftNodeIdx: 5
+    RightNodeIdx: 0
+  - CrossSectionalArea: 0.01
+    YoungModulusGPa: 0.1
+    Density: 40000
+    DampingCoefficient: 500
+    LeftNodeIdx: 5
+    RightNodeIdx: 2
+  - CrossSectionalArea: 0.01
+    YoungModulusGPa: 0.1
+    Density: 40000
+    DampingCoefficient: 500
+    LeftNodeIdx: 5
+    RightNodeIdx: 4
+  - CrossSectionalArea: 0.01
+    YoungModulusGPa: 0.1
+    Density: 40000
+    DampingCoefficient: 500
+    LeftNodeIdx: 2
+    RightNodeIdx: 3
+  - CrossSectionalArea: 0.01
+    YoungModulusGPa: 0.1
+    Density: 40000
+    DampingCoefficient: 500
+    LeftNodeIdx: 3
+    RightNodeIdx: 5
+  - CrossSectionalArea: 0.01
+    YoungModulusGPa: 0.1
+    Density: 40000
+    DampingCoefficient: 500
+    LeftNodeIdx: 3
+    RightNodeIdx: 4
+  Forces:
+  - Vector: {x: 0, y: -100000}
+    NodeIndex: 4
+  AnimationMode: 1
+  NewMarkBeta: 0.25
+  NewMarkGamma: 0.5
 --- !u!1 &2090348528
 GameObject:
   m_ObjectHideFlags: 0

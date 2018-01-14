@@ -96,15 +96,25 @@ public class TrussShape : MonoBehaviour
             var rotationMatrix = GetRotationMatrix(dir);
             return rotationMatrix * massMatrix1D * rotationMatrix.Transpose();
         }
-        
+
+        /// <summary>
+        /// Lumped mass vector / diagonal matrix
+        /// </summary>
+        /// <remarks>
+        /// Since we want this to be in global space, we can not really model the mass distribution accurately.
+        /// -> All representations I could find, defined the lumped mass (diagonal-)matrix in traverse+rotation space (as opposed to x+y).
+        /// There, thew two entries for transverse "action" would have m/2 while rotational influence would be zero.
+        /// Since everything else here is in global space, I don't see how to apply this. Instead I came up with this hack which I think might suffer from problems depending on the rotation of the element.
+        /// </remarks>
+        /// <returns></returns>
         public Vector<float> GetLumpedMassVector(IList<Node> nodes)
         {
             Vector2 dir;
             float length;
             GetDirAndLength(nodes, out dir, out length);
 
-            var m = Density * CrossSectionalArea * length / 6.0f;
-            return DenseVector.OfArray(new[] {m, 0, m, 0});
+            var m = Density * CrossSectionalArea * length / 4.0f;            
+            return DenseVector.OfArray(new[] {m, m, m, m});
         }
         
         /// <summary>
@@ -122,10 +132,13 @@ public class TrussShape : MonoBehaviour
             var rotationMatrix = GetRotationMatrix(dir);
             return rotationMatrix * dampingMatrix1d * rotationMatrix.Transpose();
         }
-        
+        /// <summary>
+        /// Lumped mass vector / diagonal matrix
+        /// </summary>
+        /// <remarks>See GetLumpedMassvector</remarks>
         public Vector<float> GetLumpedDampingVector(IList<Node> nodes)
         {
-            return DenseVector.OfArray(new[] {DampingCoefficient, 0.0f, DampingCoefficient, 0.0f});
+            return DenseVector.OfArray(new[] {DampingCoefficient / 4, DampingCoefficient / 4, DampingCoefficient / 4, DampingCoefficient / 4});
         }
     }
 
@@ -150,7 +163,8 @@ public class TrussShape : MonoBehaviour
     public enum Animation
     {
         DynamicImplicit,
-        DynamicExplicit,
+        DynamicExplicitConsistent,
+        DynamicExplicitLumped,
         Static,
     }
     
@@ -229,6 +243,40 @@ public class TrussShape : MonoBehaviour
         // computing displacement and speed directly from this requires some thought (it's in there!), but can of course always be done using central differences.
     }
     
+    void UpdateDynamicExplicit_Lumped(float dT)
+    {
+        // https://www.youtube.com/watch?v=YqynfK8qwFI&t=202s - Schuster Engineering, FEA 22: Transient Explicit
+        var stiffness = ComputeGlobalStiffnessMatrix();
+        var force = ComputeForceVector();
+        var damping = ComputeGlobalLumpedDampingVector();
+        var mass = ComputeGlobalLumpedMassVector();
+
+        const int numIterations = 20;
+        dT /= numIterations;
+        for (int i = 0; i < numIterations; ++i)
+        {
+            float dTInvSq = 1.0f / (dT * dT);
+            float dTInv2 = 1.0f / (dT * 2.0f);
+
+            // "left hand"
+            var leftHand = dTInvSq * mass + dTInv2 * damping; // not sure what to call a mass + damping thing
+
+            // "right hand"
+            var currentContrib = (DiagonalMatrix.OfDiagonal(mass.Count, mass.Count, (2.0f * dTInvSq) * mass) - stiffness) * nodeDisplacement;
+            var pastContrib = (dTInvSq * mass - dTInv2 * damping).PointwiseMultiply(nodeDisplacementOld);
+            var rightHand = force + currentContrib - pastContrib; // not sure what to call a ... whatever that is
+
+            // solve!
+            ApplyConstraints(rightHand);
+            ApplyConstraints(leftHand);
+            nodeDisplacementOld = nodeDisplacement;
+            nodeDisplacement = rightHand.PointwiseDivide(leftHand);
+            ApplyConstraints(nodeDisplacement);
+        }
+
+        // computing displacement and speed directly from this requires some thought (it's in there!), but can of course always be done using central differences.
+    }
+    
     void UpdateDynamicImplicit(float dT)
     {
         // https://www.youtube.com/watch?v=BBzHdHgqxfE&t=714s - Schuster Engineering, FEA 21: Transient Implicit
@@ -271,7 +319,10 @@ public class TrussShape : MonoBehaviour
     {
         switch (AnimationMode)
         {
-            case Animation.DynamicExplicit:
+            case Animation.DynamicExplicitLumped:
+                UpdateDynamicExplicit_Lumped(Time.fixedDeltaTime);
+                break;
+            case Animation.DynamicExplicitConsistent:
                 UpdateDynamicExplicit_Consistent(Time.fixedDeltaTime);
                 break;
             case Animation.DynamicImplicit:

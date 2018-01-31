@@ -11,8 +11,10 @@ I never took any courses on the topic, although some of the courses I took in un
 https://en.wikipedia.org/wiki/Soft-body_dynamics
 * Ricioulsy old but good introduction on FEM  
 https://www.youtube.com/watch?v=lrpj3cZrKn4
-* Very good video lectures on FEM  
+* Very good video lectures on FEM
 https://www.youtube.com/watch?v=sSaUHDQf204&t=2s
+* Pretty slides about CST Elements
+http://www.fkm.utm.my/~taminmn/SME%203033%20Finite%20Element%20Method/07-CST%20elements.pdf
 
 ## Dependencies
 

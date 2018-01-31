@@ -265,70 +265,64 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 63784539}
---- !u!1 &72104662
+--- !u!1 &122925718
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 72104663}
-  - component: {fileID: 72104664}
+  - component: {fileID: 122925719}
+  - component: {fileID: 122925720}
   m_Layer: 0
-  m_Name: TrussShape Reference - dynamic explicit lumped
+  m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &72104663
+--- !u!4 &122925719
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 72104662}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.72, y: -0.5299999, z: -2.1601562}
+  m_GameObject: {fileID: 122925718}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.659, y: -0.001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1733808558}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &72104664
+--- !u!114 &122925720
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 72104662}
+  m_GameObject: {fileID: 122925718}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df956a1f8cacb47c2b40edab605b4282, type: 3}
+  m_Script: {fileID: 11500000, guid: 62897f3299b14c24ac89f66245a1d3a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Nodes:
   - Position: {x: 0, y: 0}
     Fixed: 1
-  - Position: {x: 0, y: 0.75}
+  - Position: {x: 0, y: 1}
     Fixed: 1
-  - Position: {x: 1, y: 0}
+  - Position: {x: 1, y: 0.29}
     Fixed: 0
   Elements:
-  - CrossSectionalArea: 0.0001
-    YoungModulusGPa: 0.5
-    Density: 1000
-    DampingCoefficient: 50
-    LeftNodeIdx: 0
-    RightNodeIdx: 2
-  - CrossSectionalArea: 0.0001
-    YoungModulusGPa: 0.312
-    Density: 1000
-    DampingCoefficient: 50
-    LeftNodeIdx: 2
-    RightNodeIdx: 1
+  - NodeIdxA: 0
+    NodeIdxB: 1
+    NodeIdxC: 2
+    Thickness: 0.001
+    YoungModulusGPa: 0.7
+    PoissonRatio: 0.3
   Forces:
-  - Vector: {x: 0, y: -1000}
+  - Vector: {x: 0, y: -10000}
     NodeIndex: 2
-  AnimationMode: 2
+  AnimationMode: 3
   NewMarkBeta: 0.25
   NewMarkGamma: 0.5
 --- !u!1 &203133313
@@ -398,7 +392,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Reference
+  m_Text: Simple
 --- !u!222 &203133316
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -479,207 +473,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 464920100}
---- !u!1 &587415394
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 587415396}
-  - component: {fileID: 587415395}
-  m_Layer: 0
-  m_Name: BarShape
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &587415395
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 587415394}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce296aaab9df34b1588ac65c99c64ff4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Nodes:
-  - Position: 0
-    PointLoad: 0
-    Fixed: 1
-  - Position: 1
-    PointLoad: 0
-    Fixed: 0
-  - Position: 3
-    PointLoad: 0
-    Fixed: 0
-  - Position: 5
-    PointLoad: 0
-    Fixed: 0
-  Elements:
-  - Thickness: 0.27
-    YoungModulus: 1
-    DistributedLoad: 0
-    LeftNodeIdx: 0
-    RightNodeIdx: 1
-  - Thickness: 0.97
-    YoungModulus: 1
-    DistributedLoad: 0
-    LeftNodeIdx: 1
-    RightNodeIdx: 2
-  - Thickness: 0.45
-    YoungModulus: 1
-    DistributedLoad: 0
-    LeftNodeIdx: 2
-    RightNodeIdx: 3
---- !u!4 &587415396
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 587415394}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.53, y: 3.88, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &642165432
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 642165433}
-  - component: {fileID: 642165434}
-  m_Layer: 0
-  m_Name: TrussShape Bouncy - dynamic implicit
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &642165433
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 642165432}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.508169, y: 0.6281673, z: -2.167782}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1051060499}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &642165434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 642165432}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df956a1f8cacb47c2b40edab605b4282, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Nodes:
-  - Position: {x: 0, y: 0}
-    Fixed: 1
-  - Position: {x: 0, y: 0.75}
-    Fixed: 1
-  - Position: {x: 1, y: 0}
-    Fixed: 0
-  Elements:
-  - CrossSectionalArea: 0.0001
-    YoungModulusGPa: 0.001
-    Density: 2000
-    DampingCoefficient: 0.3
-    LeftNodeIdx: 0
-    RightNodeIdx: 2
-  - CrossSectionalArea: 0.0001
-    YoungModulusGPa: 0.001
-    Density: 2000
-    DampingCoefficient: 0.3
-    LeftNodeIdx: 2
-    RightNodeIdx: 1
-  Forces:
-  - Vector: {x: 0, y: -10}
-    NodeIndex: 2
-  AnimationMode: 0
-  NewMarkBeta: 0.25
-  NewMarkGamma: 0.5
---- !u!1 &721201992
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 721201994}
-  - component: {fileID: 721201993}
-  m_Layer: 0
-  m_Name: TrussShape Reference - dynamic explicit consistent
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &721201993
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 721201992}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df956a1f8cacb47c2b40edab605b4282, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Nodes:
-  - Position: {x: 0, y: 0}
-    Fixed: 1
-  - Position: {x: 0, y: 0.75}
-    Fixed: 1
-  - Position: {x: 1, y: 0}
-    Fixed: 0
-  Elements:
-  - CrossSectionalArea: 0.0001
-    YoungModulusGPa: 0.5
-    Density: 1000
-    DampingCoefficient: 50
-    LeftNodeIdx: 0
-    RightNodeIdx: 2
-  - CrossSectionalArea: 0.0001
-    YoungModulusGPa: 0.312
-    Density: 1000
-    DampingCoefficient: 50
-    LeftNodeIdx: 2
-    RightNodeIdx: 1
-  Forces:
-  - Vector: {x: 0, y: -1000}
-    NodeIndex: 2
-  AnimationMode: 1
-  NewMarkBeta: 0.25
-  NewMarkGamma: 0.5
---- !u!4 &721201994
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 721201992}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.71, y: -0.53, z: -2.1601562}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1733808558}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &761514551
 GameObject:
   m_ObjectHideFlags: 0
@@ -704,188 +497,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.0236391, y: -0.8128317, z: 2.6601562}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1598263027}
-  - {fileID: 2065101089}
-  - {fileID: 2065964617}
-  - {fileID: 1024217870}
+  m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &904412472
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 904412473}
-  - component: {fileID: 904412474}
-  m_Layer: 0
-  m_Name: TrussShape Bouncy - static
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &904412473
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 904412472}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.89, y: 0.6281673, z: -2.167782}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1051060499}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &904412474
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 904412472}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df956a1f8cacb47c2b40edab605b4282, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Nodes:
-  - Position: {x: 0, y: 0}
-    Fixed: 1
-  - Position: {x: 0, y: 0.75}
-    Fixed: 1
-  - Position: {x: 1, y: 0}
-    Fixed: 0
-  Elements:
-  - CrossSectionalArea: 0.0001
-    YoungModulusGPa: 0.001
-    Density: 2000
-    DampingCoefficient: 0.3
-    LeftNodeIdx: 0
-    RightNodeIdx: 2
-  - CrossSectionalArea: 0.0001
-    YoungModulusGPa: 0.001
-    Density: 2000
-    DampingCoefficient: 0.3
-    LeftNodeIdx: 2
-    RightNodeIdx: 1
-  Forces:
-  - Vector: {x: 0, y: -10}
-    NodeIndex: 2
-  AnimationMode: 3
-  NewMarkBeta: 0.25
-  NewMarkGamma: 0.5
---- !u!1 &1024217869
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1024217870}
-  - component: {fileID: 1024217871}
-  m_Layer: 0
-  m_Name: TrussShape Complex - dynamic explicit lumped
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1024217870
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1024217869}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.78, y: -2.2871683, z: -2.1601562}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 761514552}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1024217871
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1024217869}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df956a1f8cacb47c2b40edab605b4282, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Nodes:
-  - Position: {x: 0.000726223, y: -0.00269866}
-    Fixed: 1
-  - Position: {x: -0.07294607, y: 0.77084184}
-    Fixed: 1
-  - Position: {x: 0.95539725, y: 0.76729536}
-    Fixed: 0
-  - Position: {x: 1.548796, y: 0.7378255}
-    Fixed: 0
-  - Position: {x: 1.5061117, y: 0.042684317}
-    Fixed: 0
-  - Position: {x: 0.85975206, y: 0.03048873}
-    Fixed: 0
-  Elements:
-  - CrossSectionalArea: 0.01
-    YoungModulusGPa: 0.1
-    Density: 40000
-    DampingCoefficient: 500
-    LeftNodeIdx: 0
-    RightNodeIdx: 2
-  - CrossSectionalArea: 0.01
-    YoungModulusGPa: 0.1
-    Density: 40000
-    DampingCoefficient: 500
-    LeftNodeIdx: 2
-    RightNodeIdx: 1
-  - CrossSectionalArea: 0.01
-    YoungModulusGPa: 0.1
-    Density: 40000
-    DampingCoefficient: 500
-    LeftNodeIdx: 5
-    RightNodeIdx: 0
-  - CrossSectionalArea: 0.01
-    YoungModulusGPa: 0.1
-    Density: 40000
-    DampingCoefficient: 500
-    LeftNodeIdx: 5
-    RightNodeIdx: 2
-  - CrossSectionalArea: 0.01
-    YoungModulusGPa: 0.1
-    Density: 40000
-    DampingCoefficient: 500
-    LeftNodeIdx: 5
-    RightNodeIdx: 4
-  - CrossSectionalArea: 0.01
-    YoungModulusGPa: 0.1
-    Density: 40000
-    DampingCoefficient: 500
-    LeftNodeIdx: 2
-    RightNodeIdx: 3
-  - CrossSectionalArea: 0.01
-    YoungModulusGPa: 0.1
-    Density: 40000
-    DampingCoefficient: 500
-    LeftNodeIdx: 3
-    RightNodeIdx: 5
-  - CrossSectionalArea: 0.01
-    YoungModulusGPa: 0.1
-    Density: 40000
-    DampingCoefficient: 500
-    LeftNodeIdx: 3
-    RightNodeIdx: 4
-  Forces:
-  - Vector: {x: 0, y: -100000}
-    NodeIndex: 4
-  AnimationMode: 2
-  NewMarkBeta: 0.25
-  NewMarkGamma: 0.5
 --- !u!1 &1051060498
 GameObject:
   m_ObjectHideFlags: 0
@@ -910,13 +525,9 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.754339, y: -0.19646505, z: 2.6677856}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 904412473}
-  - {fileID: 642165433}
-  - {fileID: 1867589458}
-  - {fileID: 2085176463}
+  m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1318738784
 GameObject:
@@ -1011,7 +622,7 @@ RectTransform:
   - {fileID: 2090348529}
   - {fileID: 1398414520}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1094,72 +705,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1398414519}
---- !u!1 &1447566281
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1447566283}
-  - component: {fileID: 1447566282}
-  m_Layer: 0
-  m_Name: TrussShape Reference - static, as in video example
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1447566282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1447566281}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df956a1f8cacb47c2b40edab605b4282, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Nodes:
-  - Position: {x: 0, y: 0}
-    Fixed: 1
-  - Position: {x: 0, y: 0.75}
-    Fixed: 1
-  - Position: {x: 1, y: 0}
-    Fixed: 0
-  Elements:
-  - CrossSectionalArea: 0.0001
-    YoungModulusGPa: 0.5
-    Density: 1000
-    DampingCoefficient: 50
-    LeftNodeIdx: 0
-    RightNodeIdx: 2
-  - CrossSectionalArea: 0.0001
-    YoungModulusGPa: 0.312
-    Density: 1000
-    DampingCoefficient: 50
-    LeftNodeIdx: 2
-    RightNodeIdx: 1
-  Forces:
-  - Vector: {x: 0, y: -1000}
-    NodeIndex: 2
-  AnimationMode: 3
-  NewMarkBeta: 0.25
-  NewMarkGamma: 0.5
---- !u!4 &1447566283
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1447566281}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.23, y: -0.5454661, z: -2.1601562}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1733808558}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1576839232
 GameObject:
   m_ObjectHideFlags: 0
@@ -1220,7 +765,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1579315884
 GameObject:
@@ -1311,114 +856,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1598263025
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1598263027}
-  - component: {fileID: 1598263026}
-  m_Layer: 0
-  m_Name: TrussShape Complex - static
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1598263026
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1598263025}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df956a1f8cacb47c2b40edab605b4282, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Nodes:
-  - Position: {x: 0.000726223, y: -0.00269866}
-    Fixed: 1
-  - Position: {x: -0.07294607, y: 0.77084184}
-    Fixed: 1
-  - Position: {x: 0.95539725, y: 0.76729536}
-    Fixed: 0
-  - Position: {x: 1.548796, y: 0.7378255}
-    Fixed: 0
-  - Position: {x: 1.5061117, y: 0.042684317}
-    Fixed: 0
-  - Position: {x: 0.85975206, y: 0.03048873}
-    Fixed: 0
-  Elements:
-  - CrossSectionalArea: 0.01
-    YoungModulusGPa: 0.1
-    Density: 0
-    DampingCoefficient: 0
-    LeftNodeIdx: 0
-    RightNodeIdx: 2
-  - CrossSectionalArea: 0.01
-    YoungModulusGPa: 0.1
-    Density: 0
-    DampingCoefficient: 0
-    LeftNodeIdx: 2
-    RightNodeIdx: 1
-  - CrossSectionalArea: 0.01
-    YoungModulusGPa: 0.1
-    Density: 0
-    DampingCoefficient: 0
-    LeftNodeIdx: 5
-    RightNodeIdx: 0
-  - CrossSectionalArea: 0.01
-    YoungModulusGPa: 0.1
-    Density: 0
-    DampingCoefficient: 0
-    LeftNodeIdx: 5
-    RightNodeIdx: 2
-  - CrossSectionalArea: 0.01
-    YoungModulusGPa: 0.1
-    Density: 0
-    DampingCoefficient: 0
-    LeftNodeIdx: 5
-    RightNodeIdx: 4
-  - CrossSectionalArea: 0.01
-    YoungModulusGPa: 0.1
-    Density: 0
-    DampingCoefficient: 0
-    LeftNodeIdx: 2
-    RightNodeIdx: 3
-  - CrossSectionalArea: 0.01
-    YoungModulusGPa: 0.1
-    Density: 0
-    DampingCoefficient: 0
-    LeftNodeIdx: 3
-    RightNodeIdx: 5
-  - CrossSectionalArea: 0.01
-    YoungModulusGPa: 0.1
-    Density: 0
-    DampingCoefficient: 0
-    LeftNodeIdx: 3
-    RightNodeIdx: 4
-  Forces:
-  - Vector: {x: 0, y: -100000}
-    NodeIndex: 4
-  AnimationMode: 3
-  NewMarkBeta: 0.25
-  NewMarkGamma: 0.5
---- !u!4 &1598263027
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1598263025}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.26, y: -2.31, z: -2.1601562}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 761514552}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1733808557
 GameObject:
   m_ObjectHideFlags: 0
@@ -1428,7 +865,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1733808558}
   m_Layer: 0
-  m_Name: Reference
+  m_Name: Normal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1444,12 +881,9 @@ Transform:
   m_LocalPosition: {x: 1.0236391, y: -0.8128317, z: 2.6601562}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1447566283}
-  - {fileID: 2012812509}
-  - {fileID: 721201994}
-  - {fileID: 72104663}
+  - {fileID: 122925719}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1737811559
 GameObject:
@@ -1525,420 +959,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1737811559}
---- !u!1 &1867589456
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1867589458}
-  - component: {fileID: 1867589457}
-  m_Layer: 0
-  m_Name: TrussShape Bouncy - dynamic explicit consistent
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1867589457
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1867589456}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df956a1f8cacb47c2b40edab605b4282, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Nodes:
-  - Position: {x: 0, y: 0}
-    Fixed: 1
-  - Position: {x: 0, y: 0.75}
-    Fixed: 1
-  - Position: {x: 1, y: 0}
-    Fixed: 0
-  Elements:
-  - CrossSectionalArea: 0.0001
-    YoungModulusGPa: 0.001
-    Density: 2000
-    DampingCoefficient: 0.3
-    LeftNodeIdx: 0
-    RightNodeIdx: 2
-  - CrossSectionalArea: 0.0001
-    YoungModulusGPa: 0.001
-    Density: 2000
-    DampingCoefficient: 0.3
-    LeftNodeIdx: 2
-    RightNodeIdx: 1
-  Forces:
-  - Vector: {x: 0, y: -10}
-    NodeIndex: 2
-  AnimationMode: 1
-  NewMarkBeta: 0.25
-  NewMarkGamma: 0.5
---- !u!4 &1867589458
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1867589456}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.39, y: 0.6281673, z: -2.167782}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1051060499}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2012812507
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 2012812509}
-  - component: {fileID: 2012812508}
-  m_Layer: 0
-  m_Name: TrussShape Reference - dynamic Implicit
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2012812508
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2012812507}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df956a1f8cacb47c2b40edab605b4282, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Nodes:
-  - Position: {x: 0, y: 0}
-    Fixed: 1
-  - Position: {x: 0, y: 0.75}
-    Fixed: 1
-  - Position: {x: 1, y: 0}
-    Fixed: 0
-  Elements:
-  - CrossSectionalArea: 0.0001
-    YoungModulusGPa: 0.5
-    Density: 1000
-    DampingCoefficient: 50
-    LeftNodeIdx: 0
-    RightNodeIdx: 2
-  - CrossSectionalArea: 0.0001
-    YoungModulusGPa: 0.312
-    Density: 1000
-    DampingCoefficient: 50
-    LeftNodeIdx: 2
-    RightNodeIdx: 1
-  Forces:
-  - Vector: {x: 0, y: -1000}
-    NodeIndex: 2
-  AnimationMode: 0
-  NewMarkBeta: 0.25
-  NewMarkGamma: 0.5
---- !u!4 &2012812509
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2012812507}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.7774692, y: -0.5454661, z: -2.1601562}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1733808558}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2065101087
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 2065101089}
-  - component: {fileID: 2065101088}
-  m_Layer: 0
-  m_Name: TrussShape Complex - dynamic implicit
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2065101088
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2065101087}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df956a1f8cacb47c2b40edab605b4282, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Nodes:
-  - Position: {x: 0.000726223, y: -0.00269866}
-    Fixed: 1
-  - Position: {x: -0.07294607, y: 0.77084184}
-    Fixed: 1
-  - Position: {x: 0.95539725, y: 0.76729536}
-    Fixed: 0
-  - Position: {x: 1.548796, y: 0.7378255}
-    Fixed: 0
-  - Position: {x: 1.5061117, y: 0.042684317}
-    Fixed: 0
-  - Position: {x: 0.85975206, y: 0.03048873}
-    Fixed: 0
-  Elements:
-  - CrossSectionalArea: 0.01
-    YoungModulusGPa: 0.1
-    Density: 40000
-    DampingCoefficient: 500
-    LeftNodeIdx: 0
-    RightNodeIdx: 2
-  - CrossSectionalArea: 0.01
-    YoungModulusGPa: 0.1
-    Density: 40000
-    DampingCoefficient: 500
-    LeftNodeIdx: 2
-    RightNodeIdx: 1
-  - CrossSectionalArea: 0.01
-    YoungModulusGPa: 0.1
-    Density: 40000
-    DampingCoefficient: 500
-    LeftNodeIdx: 5
-    RightNodeIdx: 0
-  - CrossSectionalArea: 0.01
-    YoungModulusGPa: 0.1
-    Density: 40000
-    DampingCoefficient: 500
-    LeftNodeIdx: 5
-    RightNodeIdx: 2
-  - CrossSectionalArea: 0.01
-    YoungModulusGPa: 0.1
-    Density: 40000
-    DampingCoefficient: 500
-    LeftNodeIdx: 5
-    RightNodeIdx: 4
-  - CrossSectionalArea: 0.01
-    YoungModulusGPa: 0.1
-    Density: 40000
-    DampingCoefficient: 500
-    LeftNodeIdx: 2
-    RightNodeIdx: 3
-  - CrossSectionalArea: 0.01
-    YoungModulusGPa: 0.1
-    Density: 40000
-    DampingCoefficient: 500
-    LeftNodeIdx: 3
-    RightNodeIdx: 5
-  - CrossSectionalArea: 0.01
-    YoungModulusGPa: 0.1
-    Density: 40000
-    DampingCoefficient: 500
-    LeftNodeIdx: 3
-    RightNodeIdx: 4
-  Forces:
-  - Vector: {x: 0, y: -100000}
-    NodeIndex: 4
-  AnimationMode: 0
-  NewMarkBeta: 0.25
-  NewMarkGamma: 0.5
---- !u!4 &2065101089
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2065101087}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.033639, y: -2.2871683, z: -2.1601562}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 761514552}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2065964616
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 2065964617}
-  - component: {fileID: 2065964618}
-  m_Layer: 0
-  m_Name: TrussShape Complex - dynamic explicit consistent
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2065964617
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2065964616}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.84, y: -2.2871683, z: -2.1601562}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 761514552}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2065964618
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2065964616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df956a1f8cacb47c2b40edab605b4282, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Nodes:
-  - Position: {x: 0.000726223, y: -0.00269866}
-    Fixed: 1
-  - Position: {x: -0.07294607, y: 0.77084184}
-    Fixed: 1
-  - Position: {x: 0.95539725, y: 0.76729536}
-    Fixed: 0
-  - Position: {x: 1.548796, y: 0.7378255}
-    Fixed: 0
-  - Position: {x: 1.5061117, y: 0.042684317}
-    Fixed: 0
-  - Position: {x: 0.85975206, y: 0.03048873}
-    Fixed: 0
-  Elements:
-  - CrossSectionalArea: 0.01
-    YoungModulusGPa: 0.1
-    Density: 40000
-    DampingCoefficient: 500
-    LeftNodeIdx: 0
-    RightNodeIdx: 2
-  - CrossSectionalArea: 0.01
-    YoungModulusGPa: 0.1
-    Density: 40000
-    DampingCoefficient: 500
-    LeftNodeIdx: 2
-    RightNodeIdx: 1
-  - CrossSectionalArea: 0.01
-    YoungModulusGPa: 0.1
-    Density: 40000
-    DampingCoefficient: 500
-    LeftNodeIdx: 5
-    RightNodeIdx: 0
-  - CrossSectionalArea: 0.01
-    YoungModulusGPa: 0.1
-    Density: 40000
-    DampingCoefficient: 500
-    LeftNodeIdx: 5
-    RightNodeIdx: 2
-  - CrossSectionalArea: 0.01
-    YoungModulusGPa: 0.1
-    Density: 40000
-    DampingCoefficient: 500
-    LeftNodeIdx: 5
-    RightNodeIdx: 4
-  - CrossSectionalArea: 0.01
-    YoungModulusGPa: 0.1
-    Density: 40000
-    DampingCoefficient: 500
-    LeftNodeIdx: 2
-    RightNodeIdx: 3
-  - CrossSectionalArea: 0.01
-    YoungModulusGPa: 0.1
-    Density: 40000
-    DampingCoefficient: 500
-    LeftNodeIdx: 3
-    RightNodeIdx: 5
-  - CrossSectionalArea: 0.01
-    YoungModulusGPa: 0.1
-    Density: 40000
-    DampingCoefficient: 500
-    LeftNodeIdx: 3
-    RightNodeIdx: 4
-  Forces:
-  - Vector: {x: 0, y: -100000}
-    NodeIndex: 4
-  AnimationMode: 1
-  NewMarkBeta: 0.25
-  NewMarkGamma: 0.5
---- !u!1 &2085176462
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 2085176463}
-  - component: {fileID: 2085176464}
-  m_Layer: 0
-  m_Name: TrussShape Bouncy - dynamic explicit lumped
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2085176463
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2085176462}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2, y: 0.6281673, z: -2.167782}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1051060499}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2085176464
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2085176462}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df956a1f8cacb47c2b40edab605b4282, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Nodes:
-  - Position: {x: 0, y: 0}
-    Fixed: 1
-  - Position: {x: 0, y: 0.75}
-    Fixed: 1
-  - Position: {x: 1, y: 0}
-    Fixed: 0
-  Elements:
-  - CrossSectionalArea: 0.0001
-    YoungModulusGPa: 0.001
-    Density: 2000
-    DampingCoefficient: 0.3
-    LeftNodeIdx: 0
-    RightNodeIdx: 2
-  - CrossSectionalArea: 0.0001
-    YoungModulusGPa: 0.001
-    Density: 2000
-    DampingCoefficient: 0.3
-    LeftNodeIdx: 2
-    RightNodeIdx: 1
-  Forces:
-  - Vector: {x: 0, y: -10}
-    NodeIndex: 2
-  AnimationMode: 2
-  NewMarkBeta: 0.25
-  NewMarkGamma: 0.5
 --- !u!1 &2090348528
 GameObject:
   m_ObjectHideFlags: 0

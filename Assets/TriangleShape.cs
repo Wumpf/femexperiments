@@ -33,20 +33,78 @@ public class TriangleShape : MonoBehaviour
         public int NodeIdxA;
         public int NodeIdxB;
         public int NodeIdxC;
+        
+        [Tooltip("Thickness of the element in meters")]
+        public float Thickness = 0.01f;
+        
+        [Tooltip("Describes stiffness of material. Rubber has 0.01-0.1, steel has 209")]
+        public float YoungModulusGPa = 1.0f;
 
+        public float YoungModulus => YoungModulusGPa * 1000000000;
+        
+        [Tooltip("Relationship between transverse strain and axial strain.\n" +
+                 "If a material is stretched/compressed in one direction, it gets thinner/thicker in the other two. Negative means that it expands in the other direction." +
+                 "A high ratio means more change in the other axis. Rubber has close to 0.5, cast steel has 0.265")]
+        public float PoissonRatio = 0.3f;
+        
         public Element(int nodeIdxA, int nodeIdxB, int nodeIdxC)
         {
             NodeIdxA = nodeIdxA;
             NodeIdxB = nodeIdxB;
             NodeIdxC = nodeIdxC;
         }
+
+        private float GetArea(IList<Node> nodes)
+        {
+            var pos1 = nodes[NodeIdxA].Position;
+            var pos2 = nodes[NodeIdxB].Position;
+            var pos3 = nodes[NodeIdxC].Position;
+
+            var p13 = pos1 - pos3;
+            var p23 = pos2 - pos3;
+            
+            return Mathf.Abs(p13.x * p23.y - p23.x * p13.y) * 0.5f;
+        }
         
+        private Matrix<float> GetStrainDisplacementMatrix(IList<Node> nodes)
+        {
+            var pos1 = nodes[NodeIdxA].Position;
+            var pos2 = nodes[NodeIdxB].Position;
+            var pos3 = nodes[NodeIdxC].Position;
+
+            var p13 = pos1 - pos3;    // TODO: simplify
+            var p12 = pos1 - pos2;
+            var p23 = pos2 - pos3;
+            var p21 = pos2 - pos1;
+            var p32 = pos3 - pos2;
+            var p31 = pos3 - pos1;
+            
+            float area2 = p13.x * p23.y - p23.x * p13.y; // determinat of Jacobian
+            
+            return DenseMatrix.OfArray(new float[,]
+            {
+                {p23.y,  0.0f, p31.y,  0.0f, p12.y,  0.0f},
+                { 0.0f, p32.x,  0.0f, p13.x,  0.0f, p21.x},
+                {p32.x, p23.y, p13.x, p31.y, p21.x, p12.y}
+            }) / area2;
+        }
         
+        // Also called "Material's Matrix"
+        private Matrix<float> GetStressStrainRelationMatrix()
+        {
+            return DenseMatrix.OfArray(new float[,]
+            {
+                {1.0f, PoissonRatio, 0.0f},
+                {PoissonRatio, 1.0f, 0.0f},
+                {0.0f, 0.0f, 0.5f * (1.0f - PoissonRatio)}
+            }) * YoungModulus / (1.0f - PoissonRatio * PoissonRatio);
+        }
         
         public Matrix<float> GetStiffnessMatrix(IList<Node> nodes)
         {
-            // TODO
-            return DenseMatrix.Create(1,1,0);
+            var strainDisplacementMatrix = GetStrainDisplacementMatrix(nodes);
+            var materialMatrix = GetStressStrainRelationMatrix();
+            return Thickness * GetArea(nodes) * strainDisplacementMatrix.TransposeThisAndMultiply(materialMatrix * strainDisplacementMatrix);
         }
 
         /// <summary>
@@ -105,12 +163,12 @@ public class TriangleShape : MonoBehaviour
                     
                 case 2:
                 case 3:
-                    nodeIdx = NodeIdxA;
+                    nodeIdx = NodeIdxB;
                     break;
                     
                 case 4:
                 case 5:
-                    nodeIdx = NodeIdxA;
+                    nodeIdx = NodeIdxC;
                     break;
                 
                 default:
@@ -162,11 +220,11 @@ public class TriangleShape : MonoBehaviour
     void Start()
     {
         // Estimate d_-1 using euler time formula. F=ma => a = F/m
-        var test = ComputeGlobalConsistentMassMatrix();
+     /*   var test = ComputeGlobalConsistentMassMatrix();
         ApplyConstraints(test);
         var startupAcceleration = test.Solve(ComputeForceVector()); 
         nodeDisplacementOld = startupAcceleration * (Time.fixedDeltaTime * Time.fixedDeltaTime * 0.5f);        
-        ApplyConstraints(nodeDisplacementOld);
+        ApplyConstraints(nodeDisplacementOld); */
         
         nodeDisplacement = DenseVector.Create(Nodes.Count * 2, 0.0f);
         nodeSpeed = DenseVector.Create(Nodes.Count * 2, 0.0f);

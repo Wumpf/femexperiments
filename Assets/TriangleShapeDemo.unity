@@ -497,7 +497,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.0236391, y: -0.8128317, z: 2.6601562}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1294228637}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -529,6 +530,90 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1294228636
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1294228637}
+  - component: {fileID: 1294228638}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1294228637
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1294228636}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4.659, y: -2.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 761514552}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1294228638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1294228636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62897f3299b14c24ac89f66245a1d3a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Nodes:
+  - Position: {x: 0, y: 0}
+    Fixed: 1
+  - Position: {x: 0, y: 1}
+    Fixed: 1
+  - Position: {x: 1, y: 0.29}
+    Fixed: 0
+  - Position: {x: 1.72, y: 0.97}
+    Fixed: 0
+  - Position: {x: 1.72, y: 0.37}
+    Fixed: 0
+  - Position: {x: 2.92, y: 0.13}
+    Fixed: 0
+  Elements:
+  - NodeIdxA: 0
+    NodeIdxB: 1
+    NodeIdxC: 2
+    Thickness: 0.001
+    YoungModulusGPa: 0.7
+    PoissonRatio: 0.3
+  - NodeIdxA: 1
+    NodeIdxB: 2
+    NodeIdxC: 3
+    Thickness: 0.001
+    YoungModulusGPa: 0.7
+    PoissonRatio: 0.3
+  - NodeIdxA: 3
+    NodeIdxB: 2
+    NodeIdxC: 4
+    Thickness: 0.001
+    YoungModulusGPa: 0.7
+    PoissonRatio: 0.3
+  - NodeIdxA: 4
+    NodeIdxB: 3
+    NodeIdxC: 5
+    Thickness: 0.001
+    YoungModulusGPa: 0.7
+    PoissonRatio: 0.3
+  Forces:
+  - Vector: {x: 0, y: -10000}
+    NodeIndex: 5
+  AnimationMode: 3
+  NewMarkBeta: 0.25
+  NewMarkGamma: 0.5
 --- !u!1 &1318738784
 GameObject:
   m_ObjectHideFlags: 0

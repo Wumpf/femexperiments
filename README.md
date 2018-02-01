@@ -13,8 +13,10 @@ https://en.wikipedia.org/wiki/Soft-body_dynamics
 https://www.youtube.com/watch?v=lrpj3cZrKn4
 * Very good video lectures on FEM
 https://www.youtube.com/watch?v=sSaUHDQf204&t=2s
-* Pretty slides about CST Elements
+* Pretty slides about CST triangle elements
 http://www.fkm.utm.my/~taminmn/SME%203033%20Finite%20Element%20Method/07-CST%20elements.pdf
+* On mass matrices. Containst among other useful things the derivation of (consistent) mass matrices for CST and LST triangle elements
+http://kis.tu.kielce.pl/mo/COLORADO_FEM/colorado/IFEM.Ch31.pdf
 
 ## Dependencies
 

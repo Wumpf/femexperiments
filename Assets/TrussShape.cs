@@ -7,6 +7,8 @@ using UnityEditor;
 using UnityEngine;
 
 // A 2D structure whose line elements can experience only axial stress
+//
+// Also known as "Bernoulli-Euler Plane Beam"
 public class TrussShape : MonoBehaviour
 {
     [Serializable]
@@ -101,10 +103,11 @@ public class TrussShape : MonoBehaviour
         /// Lumped mass vector / diagonal matrix
         /// </summary>
         /// <remarks>
-        /// Since we want this to be in global space, we can not really model the mass distribution accurately.
-        /// -> All representations I could find, defined the lumped mass (diagonal-)matrix in traverse+rotation space (as opposed to x+y).
-        /// There, thew two entries for transverse "action" would have m/2 while rotational influence would be zero.
-        /// Since everything else here is in global space, I don't see how to apply this. Instead I came up with this hack which I think might suffer from problems depending on the rotation of the element.
+        /// We're using "Direct Mass Lumping" here which ignores any cross coupling of nodes amonst each other.
+        /// This preserves translational kinetic energy but does not preserve angular momentum.
+        /// 
+        /// According to http://kis.tu.kielce.pl/mo/COLORADO_FEM/colorado/IFEM.Ch31.pdf a "real" lumped matrix will be singular and thus we would no longer be able to longe solve our equations.
+        /// Therefore, a values between 0 and 1/50 * l*l is used in the rotational diagonal fields.
         /// </remarks>
         /// <returns></returns>
         public Vector<float> GetLumpedMassVector(IList<Node> nodes)
@@ -113,8 +116,9 @@ public class TrussShape : MonoBehaviour
             float length;
             GetDirAndLength(nodes, out dir, out length);
 
-            var m = Density * CrossSectionalArea * length / 4.0f;            
-            return DenseVector.OfArray(new[] {m, m, m, m});
+            var m = Density * CrossSectionalArea * length;
+            var dummy = 1.0f / 50.0f * length * length;
+            return DenseVector.OfArray(new[] {0.5f, dummy, 0.5f, dummy}) * m;
         }
         
         /// <summary>

@@ -35,7 +35,7 @@ public class TriangleShape : MonoBehaviour
         public int NodeIdxC;
         
         [Tooltip("Thickness of the element in meters")]
-        public float Thickness = 0.01f;
+        public float Thickness = 0.001f;
         
         [Tooltip("Describes stiffness of material. Rubber has 0.01-0.1, steel has 209")]
         public float YoungModulusGPa = 1.0f;
@@ -46,6 +46,11 @@ public class TriangleShape : MonoBehaviour
                  "If a material is stretched/compressed in one direction, it gets thinner/thicker in the other two. Negative means that it expands in the other direction." +
                  "A high ratio means more change in the other axis. Rubber has close to 0.5, cast steel has 0.265")]
         public float PoissonRatio = 0.3f;
+        
+        [Tooltip("kg per cubic meter. 1000 is water.")]
+        public float Density = 1000.0f;
+
+        public float DampingCoefficient = 50.0f;
         
         public Element(int nodeIdxA, int nodeIdxB, int nodeIdxC)
         {
@@ -78,7 +83,7 @@ public class TriangleShape : MonoBehaviour
 
         private float GetTotalMass(IList<Node> nodes)
         {
-            return Density * Mathf.Abs(GetArea(nodes)) * Thickness;
+            return Density * GetArea(nodes) * Thickness;
         }
         
         // Also called "Material's Matrix"
@@ -125,24 +130,27 @@ public class TriangleShape : MonoBehaviour
         /// </summary>
         public Matrix<float> GetConsistentMassMatrix(IList<Node> nodes)
         {
-            // TODO
-            return DenseMatrix.Create(1,1,0);
+            return GetTotalMass(nodes) / 12.0f * DenseMatrix.OfArray(new float[,]
+            {
+                {2.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f},
+                {0.0f, 2.0f, 0.0f, 1.0f, 0.0f, 1.0f},
+                {1.0f, 0.0f, 2.0f, 0.0f, 1.0f, 0.0f},
+                {0.0f, 1.0f, 0.0f, 2.0f, 0.0f, 1.0f},
+                {1.0f, 0.0f, 1.0f, 0.0f, 2.0f, 0.0f},
+                {0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 2.0f}
+            });
         }
 
         /// <summary>
         /// Lumped mass vector / diagonal matrix
         /// </summary>
         /// <remarks>
-        /// Since we want this to be in global space, we can not really model the mass distribution accurately.
-        /// -> All representations I could find, defined the lumped mass (diagonal-)matrix in traverse+rotation space (as opposed to x+y).
-        /// There, thew two entries for transverse "action" would have m/2 while rotational influence would be zero.
-        /// Since everything else here is in global space, I don't see how to apply this. Instead I came up with this hack which I think might suffer from problems depending on the rotation of the element.
+        /// Mass is equally distributed to the trhee nodes
         /// </remarks>
         /// <returns></returns>
         public Vector<float> GetLumpedMassVector(IList<Node> nodes)
         {
-            // TODO
-            return DenseVector.Create(1,0);
+            return DenseVector.Create(6, GetTotalMass(nodes) / 3.0f);
         }
         
         /// <summary>
@@ -151,17 +159,24 @@ public class TriangleShape : MonoBehaviour
         /// <returns></returns>
         public Matrix<float> GetConsistentDampingMatrix(IList<Node> nodes)
         {
-            // TODO
-            return DenseMatrix.Create(1,1,0);
+            return DampingCoefficient / 12.0f * DenseMatrix.OfArray(new float[,]
+            {
+                {2.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f},
+                {0.0f, 2.0f, 0.0f, 1.0f, 0.0f, 1.0f},
+                {1.0f, 0.0f, 2.0f, 0.0f, 1.0f, 0.0f},
+                {0.0f, 1.0f, 0.0f, 2.0f, 0.0f, 1.0f},
+                {1.0f, 0.0f, 1.0f, 0.0f, 2.0f, 0.0f},
+                {0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 2.0f}
+            });
         }
+        
         /// <summary>
         /// Lumped mass vector / diagonal matrix
         /// </summary>
         /// <remarks>See GetLumpedMassvector</remarks>
         public Vector<float> GetLumpedDampingVector(IList<Node> nodes)
         {
-            // TODO
-            return DenseVector.Create(1,0);
+            return DenseVector.Create(6, DampingCoefficient / 3.0f);
         }
 
         public int LocalComponentIndexToGlobal(int local)
@@ -233,11 +248,11 @@ public class TriangleShape : MonoBehaviour
     void Start()
     {
         // Estimate d_-1 using euler time formula. F=ma => a = F/m
-     /*   var test = ComputeGlobalConsistentMassMatrix();
+        var test = ComputeGlobalConsistentMassMatrix();
         ApplyConstraints(test);
         var startupAcceleration = test.Solve(ComputeForceVector()); 
         nodeDisplacementOld = startupAcceleration * (Time.fixedDeltaTime * Time.fixedDeltaTime * 0.5f);        
-        ApplyConstraints(nodeDisplacementOld); */
+        ApplyConstraints(nodeDisplacementOld);
         
         nodeDisplacement = DenseVector.Create(Nodes.Count * 2, 0.0f);
         nodeSpeed = DenseVector.Create(Nodes.Count * 2, 0.0f);
@@ -440,7 +455,7 @@ public class TriangleShape : MonoBehaviour
         foreach (var e in Elements)
         {
             var elementVector = getElementVectorFunc(e, Nodes);
-            for (int r = 0; r < 4; ++r)
+            for (int r = 0; r < 6; ++r)
             {
                 int globalR = e.LocalComponentIndexToGlobal(r);
                 vector[globalR] += elementVector[r];

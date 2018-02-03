@@ -3,6 +3,8 @@ using UnityEditor;
 using UnityEngine;
 using System.Linq;
 
+using Node = FEMShape2D.Node;
+
 [CustomEditor(typeof(TrussShape))]
 class TrussShapeEditor : Editor
 {
@@ -57,7 +59,7 @@ class TrussShapeEditor : Editor
             Debug.Log(mousePosition);
             Debug.Log(mousePosition - targetShape.transform.position);
             EditorGUI.BeginChangeCheck();
-            targetShape.Nodes.Add(new TrussShape.Node(mousePosition - targetShape.transform.position));
+            targetShape.Nodes.Add(new Node(mousePosition - targetShape.transform.position));
             EditorGUI.EndChangeCheck();
             Undo.RecordObject(targetShape, "Add truss node.");
         }

@@ -6,27 +6,13 @@ using MathNet.Numerics.LinearAlgebra.Single;
 using UnityEditor;
 using UnityEngine;
 
+using Node = FEMShape2D.Node;
+
 // A 2D structure whose line elements can experience only axial stress
 //
 // Also known as "Bernoulli-Euler Plane Beam"
 public class TrussShape : MonoBehaviour
 {
-    [Serializable]
-    public struct Node
-    {
-        public Node(Vector2 pos)
-        {
-            Position = pos;
-            Fixed = false;
-        }
-        
-        public Vector2 Position;
-        /// <summary>
-        /// If true, the node is constrained, i.e. it cannot be moved.
-        /// </summary>
-        public bool Fixed;
-    }
-
     [Serializable]
     public class Element
     {

@@ -6,27 +6,13 @@ using MathNet.Numerics.LinearAlgebra.Single;
 using UnityEditor;
 using UnityEngine;
 
+using Node = FEMShape2D.Node;
+
 // A triangle shape consisting of Constant Strain Triangles (CST)
 // 
 // As the name implies the strain is the same across the entire triangle. This leads to discontinuities in strain from one triangle to the next.
 public class TriangleShape : MonoBehaviour
 {
-    [Serializable]
-    public struct Node
-    {
-        public Node(Vector2 pos)
-        {
-            Position = pos;
-            Fixed = false;
-        }
-        
-        public Vector2 Position;
-        /// <summary>
-        /// If true, the node is constrained, i.e. it cannot be moved.
-        /// </summary>
-        public bool Fixed;
-    }
-
     [Serializable]
     public class Element
     {        

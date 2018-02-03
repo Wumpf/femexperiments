@@ -54,6 +54,16 @@ public class TriangleShape : MonoBehaviour
             NodeIdxC = nodeIdxC;
         }
 
+        public void FixPointOrder(IList<Node> nodes)
+        {
+            if (GetArea(nodes) < 0.0f)
+            {
+                var tmp = NodeIdxA;
+                NodeIdxA = NodeIdxB;
+                NodeIdxB = tmp;
+            }
+        }
+
         private float GetArea(IList<Node> nodes)
         {
             var pos1 = nodes[NodeIdxA].Position;
@@ -63,30 +73,12 @@ public class TriangleShape : MonoBehaviour
             var p13 = pos1 - pos3;
             var p23 = pos2 - pos3;
             
-            return Mathf.Abs(p13.x * p23.y - p23.x * p13.y) * 0.5f;
+            return (p13.x * p23.y - p23.x * p13.y) * 0.5f;
         }
-        
-        private Matrix<float> GetStrainDisplacementMatrix(IList<Node> nodes)
-        {
-            var pos1 = nodes[NodeIdxA].Position;
-            var pos2 = nodes[NodeIdxB].Position;
-            var pos3 = nodes[NodeIdxC].Position;
 
-            var p13 = pos1 - pos3;    // TODO: simplify
-            var p12 = pos1 - pos2;
-            var p23 = pos2 - pos3;
-            var p21 = pos2 - pos1;
-            var p32 = pos3 - pos2;
-            var p31 = pos3 - pos1;
-            
-            float area2 = p13.x * p23.y - p23.x * p13.y; // determinat of Jacobian
-            
-            return DenseMatrix.OfArray(new float[,]
-            {
-                {p23.y,  0.0f, p31.y,  0.0f, p12.y,  0.0f},
-                { 0.0f, p32.x,  0.0f, p13.x,  0.0f, p21.x},
-                {p32.x, p23.y, p13.x, p31.y, p21.x, p12.y}
-            }) / area2;
+        private float GetTotalMass(IList<Node> nodes)
+        {
+            return Density * Mathf.Abs(GetArea(nodes)) * Thickness;
         }
         
         // Also called "Material's Matrix"
@@ -102,9 +94,30 @@ public class TriangleShape : MonoBehaviour
         
         public Matrix<float> GetStiffnessMatrix(IList<Node> nodes)
         {
-            var strainDisplacementMatrix = GetStrainDisplacementMatrix(nodes);
+            var pos1 = nodes[NodeIdxA].Position;
+            var pos2 = nodes[NodeIdxB].Position;
+            var pos3 = nodes[NodeIdxC].Position;
+
+            var p13 = pos1 - pos3;    // TODO: simplify?
+            var p12 = pos1 - pos2;
+            var p23 = pos2 - pos3;
+            var p21 = pos2 - pos1;
+            var p32 = pos3 - pos2;
+            var p31 = pos3 - pos1;
+            
+            float area2 = p13.x * p23.y - p23.x * p13.y; // determinat of Jacobian = area times 2
+            
+            // Not exactly strain displacement matrix - missing division by 2A
+            var strainDisplacementMatrix = DenseMatrix.OfArray(new float[,]
+            {
+                {p23.y,  0.0f, p31.y,  0.0f, p12.y,  0.0f},
+                { 0.0f, p32.x,  0.0f, p13.x,  0.0f, p21.x},
+                {p32.x, p23.y, p13.x, p31.y, p21.x, p12.y}
+            });
+            
             var materialMatrix = GetStressStrainRelationMatrix();
-            return Thickness * GetArea(nodes) * strainDisplacementMatrix.TransposeThisAndMultiply(materialMatrix * strainDisplacementMatrix);
+            
+            return (Thickness / (2.0f * area2)) * strainDisplacementMatrix.TransposeThisAndMultiply(materialMatrix * strainDisplacementMatrix);
         }
 
         /// <summary>
@@ -229,6 +242,9 @@ public class TriangleShape : MonoBehaviour
         nodeDisplacement = DenseVector.Create(Nodes.Count * 2, 0.0f);
         nodeSpeed = DenseVector.Create(Nodes.Count * 2, 0.0f);
         nodeAcceleration = DenseVector.Create(Nodes.Count * 2, 0.0f);
+        
+        foreach(var elem in Elements)
+            elem.FixPointOrder(Nodes);
     }
 
     void UpdateStatic()

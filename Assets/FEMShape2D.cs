@@ -23,4 +23,21 @@ public abstract class FEMShape2D
         /// </summary>
         public bool Fixed;
     }
+
+    [Serializable]
+    public abstract class Element
+    {
+        [Tooltip("Thickness of the element in meters")]
+        public float Thickness = 0.001f;
+        
+        [Tooltip("Describes stiffness of material. Rubber has 0.01-0.1, steel has 209")]
+        public float YoungModulusGPa = 1.0f;
+
+        public float YoungModulus => YoungModulusGPa * 1000000000;
+        
+        [Tooltip("kg per cubic meter. 1000 is water.")]
+        public float Density = 1000.0f;
+
+        public float DampingCoefficient = 50.0f;
+    }
 }

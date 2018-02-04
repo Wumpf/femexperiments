@@ -14,29 +14,16 @@ using Node = FEMShape2D.Node;
 public class TriangleShape : MonoBehaviour
 {
     [Serializable]
-    public class Element
+    public class Element : FEMShape2D.Element
     {        
         public int NodeIdxA;
         public int NodeIdxB;
         public int NodeIdxC;
         
-        [Tooltip("Thickness of the element in meters")]
-        public float Thickness = 0.001f;
-        
-        [Tooltip("Describes stiffness of material. Rubber has 0.01-0.1, steel has 209")]
-        public float YoungModulusGPa = 1.0f;
-
-        public float YoungModulus => YoungModulusGPa * 1000000000;
-        
         [Tooltip("Relationship between transverse strain and axial strain.\n" +
                  "If a material is stretched/compressed in one direction, it gets thinner/thicker in the other two. Negative means that it expands in the other direction." +
                  "A high ratio means more change in the other axis. Rubber has close to 0.5, cast steel has 0.265")]
         public float PoissonRatio = 0.3f;
-        
-        [Tooltip("kg per cubic meter. 1000 is water.")]
-        public float Density = 1000.0f;
-
-        public float DampingCoefficient = 50.0f;
         
         public Element(int nodeIdxA, int nodeIdxB, int nodeIdxC)
         {

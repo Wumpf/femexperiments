@@ -14,19 +14,10 @@ using Node = FEMShape2D.Node;
 public class TrussShape : MonoBehaviour
 {
     [Serializable]
-    public class Element
+    public class Element : FEMShape2D.Element
     {
         [Tooltip("Area in square meter.")]
         public float CrossSectionalArea = 0.01f;    // For a rod: Thickness * Thickness * (float) Math.PI;
-        [Tooltip("Describes stiffness of material. Rubber has 0.01-0.1, stell has 209")]
-        public float YoungModulusGPa = 1.0f;
-
-        public float YoungModulus => YoungModulusGPa * 1000000000;
-
-        [Tooltip("kg per cubic meter. 1000 is water.")]
-        public float Density = 1000.0f;
-
-        public float DampingCoefficient = 50.0f;
         
         public int LeftNodeIdx;
         public int RightNodeIdx;

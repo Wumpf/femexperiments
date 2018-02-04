@@ -3,8 +3,6 @@ using UnityEditor;
 using UnityEngine;
 using System.Linq;
 
-using Node = FEMShape2D.Node;
-
 [CustomEditor(typeof(TrussShape))]
 class TrussShapeEditor : Editor
 {

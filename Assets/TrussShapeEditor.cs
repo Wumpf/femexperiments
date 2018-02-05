@@ -82,7 +82,7 @@ class TrussShapeEditor : Editor
                 if (Event.current.shift)
                 {
                     EditorGUI.BeginChangeCheck();
-                    targetShape.Elements.Add(new TrussShape.Element(selectedNode, i));
+                    targetShape.Elements.Add(new TrussElement(selectedNode, i));
                     EditorGUI.EndChangeCheck();
                     Undo.RecordObject(targetShape, "Add truss element.");
                 }

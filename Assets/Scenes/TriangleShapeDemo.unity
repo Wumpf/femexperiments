@@ -305,6 +305,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62897f3299b14c24ac89f66245a1d3a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Forces:
+  - Vector: {x: 0, y: -100}
+    NodeIndex: 5
+  AnimationMode: 1
+  NewMarkBeta: 0.25
+  NewMarkGamma: 0.5
   Nodes:
   - Position: {x: 0, y: 0}
     Fixed: 1
@@ -320,43 +326,37 @@ MonoBehaviour:
     Fixed: 0
   Elements:
   - Thickness: 0.001
-    YoungModulusGPa: 0.7
-    Density: 0
-    DampingCoefficient: 0
-    NodeIdxA: 0
-    NodeIdxB: 1
+    YoungModulusGPa: 0.01
+    Density: 1000
+    DampingCoefficient: 10
+    NodeIdxA: 1
+    NodeIdxB: 0
     NodeIdxC: 2
     PoissonRatio: 0.3
   - Thickness: 0.001
-    YoungModulusGPa: 0.7
-    Density: 0
-    DampingCoefficient: 0
+    YoungModulusGPa: 0.01
+    Density: 1000
+    DampingCoefficient: 10
     NodeIdxA: 1
     NodeIdxB: 2
     NodeIdxC: 3
     PoissonRatio: 0.3
   - Thickness: 0.001
-    YoungModulusGPa: 0.7
-    Density: 0
-    DampingCoefficient: 0
+    YoungModulusGPa: 0.01
+    Density: 1000
+    DampingCoefficient: 10
     NodeIdxA: 3
     NodeIdxB: 2
     NodeIdxC: 4
     PoissonRatio: 0.3
   - Thickness: 0.001
-    YoungModulusGPa: 0.7
-    Density: 0
-    DampingCoefficient: 0
-    NodeIdxA: 4
-    NodeIdxB: 3
+    YoungModulusGPa: 0.01
+    Density: 1000
+    DampingCoefficient: 10
+    NodeIdxA: 3
+    NodeIdxB: 4
     NodeIdxC: 5
     PoissonRatio: 0.3
-  Forces:
-  - Vector: {x: 0, y: -10000}
-    NodeIndex: 5
-  AnimationMode: 1
-  NewMarkBeta: 0.25
-  NewMarkGamma: 0.5
 --- !u!1 &104639996
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,6 +397,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62897f3299b14c24ac89f66245a1d3a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Forces:
+  - Vector: {x: 0, y: -100}
+    NodeIndex: 5
+  AnimationMode: 0
+  NewMarkBeta: 0.25
+  NewMarkGamma: 0.5
   Nodes:
   - Position: {x: 0, y: 0}
     Fixed: 1
@@ -412,43 +418,37 @@ MonoBehaviour:
     Fixed: 0
   Elements:
   - Thickness: 0.001
-    YoungModulusGPa: 0.7
-    Density: 0
-    DampingCoefficient: 0
+    YoungModulusGPa: 0.01
+    Density: 1000
+    DampingCoefficient: 10
     NodeIdxA: 0
     NodeIdxB: 1
     NodeIdxC: 2
     PoissonRatio: 0.3
   - Thickness: 0.001
-    YoungModulusGPa: 0.7
-    Density: 0
-    DampingCoefficient: 0
+    YoungModulusGPa: 0.01
+    Density: 1000
+    DampingCoefficient: 10
     NodeIdxA: 1
     NodeIdxB: 2
     NodeIdxC: 3
     PoissonRatio: 0.3
   - Thickness: 0.001
-    YoungModulusGPa: 0.7
-    Density: 0
-    DampingCoefficient: 0
+    YoungModulusGPa: 0.01
+    Density: 1000
+    DampingCoefficient: 10
     NodeIdxA: 3
     NodeIdxB: 2
     NodeIdxC: 4
     PoissonRatio: 0.3
   - Thickness: 0.001
-    YoungModulusGPa: 0.7
-    Density: 0
-    DampingCoefficient: 0
+    YoungModulusGPa: 0.01
+    Density: 1000
+    DampingCoefficient: 10
     NodeIdxA: 4
     NodeIdxB: 3
     NodeIdxC: 5
     PoissonRatio: 0.3
-  Forces:
-  - Vector: {x: 0, y: -10000}
-    NodeIndex: 5
-  AnimationMode: 0
-  NewMarkBeta: 0.25
-  NewMarkGamma: 0.5
 --- !u!1 &122925718
 GameObject:
   m_ObjectHideFlags: 0
@@ -489,6 +489,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62897f3299b14c24ac89f66245a1d3a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Forces:
+  - Vector: {x: 0, y: -10000}
+    NodeIndex: 2
+  AnimationMode: 3
+  NewMarkBeta: 0.25
+  NewMarkGamma: 0.5
   Nodes:
   - Position: {x: 0, y: 0}
     Fixed: 1
@@ -505,12 +511,6 @@ MonoBehaviour:
     NodeIdxB: 1
     NodeIdxC: 2
     PoissonRatio: 0.3
-  Forces:
-  - Vector: {x: 0, y: -10000}
-    NodeIndex: 2
-  AnimationMode: 3
-  NewMarkBeta: 0.25
-  NewMarkGamma: 0.5
 --- !u!1 &203133313
 GameObject:
   m_ObjectHideFlags: 0
@@ -699,6 +699,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62897f3299b14c24ac89f66245a1d3a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Forces:
+  - Vector: {x: 0, y: -100}
+    NodeIndex: 2
+  AnimationMode: 3
+  NewMarkBeta: 0.25
+  NewMarkGamma: 0.5
   Nodes:
   - Position: {x: 0, y: 0}
     Fixed: 1
@@ -715,12 +721,6 @@ MonoBehaviour:
     NodeIdxB: 1
     NodeIdxC: 2
     PoissonRatio: 0.49
-  Forces:
-  - Vector: {x: 0, y: -100}
-    NodeIndex: 2
-  AnimationMode: 3
-  NewMarkBeta: 0.25
-  NewMarkGamma: 0.5
 --- !u!1 &695225480
 GameObject:
   m_ObjectHideFlags: 0
@@ -761,6 +761,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62897f3299b14c24ac89f66245a1d3a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Forces:
+  - Vector: {x: 0, y: -100}
+    NodeIndex: 2
+  AnimationMode: 2
+  NewMarkBeta: 0.25
+  NewMarkGamma: 0.5
   Nodes:
   - Position: {x: 0, y: 0}
     Fixed: 1
@@ -777,12 +783,6 @@ MonoBehaviour:
     NodeIdxB: 1
     NodeIdxC: 2
     PoissonRatio: 0.49
-  Forces:
-  - Vector: {x: 0, y: -100}
-    NodeIndex: 2
-  AnimationMode: 2
-  NewMarkBeta: 0.25
-  NewMarkGamma: 0.5
 --- !u!1 &727714194
 GameObject:
   m_ObjectHideFlags: 0
@@ -823,6 +823,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62897f3299b14c24ac89f66245a1d3a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Forces:
+  - Vector: {x: 0, y: -100}
+    NodeIndex: 2
+  AnimationMode: 0
+  NewMarkBeta: 0.25
+  NewMarkGamma: 0.5
   Nodes:
   - Position: {x: 0, y: 0}
     Fixed: 1
@@ -839,12 +845,6 @@ MonoBehaviour:
     NodeIdxB: 1
     NodeIdxC: 2
     PoissonRatio: 0.49
-  Forces:
-  - Vector: {x: 0, y: -100}
-    NodeIndex: 2
-  AnimationMode: 0
-  NewMarkBeta: 0.25
-  NewMarkGamma: 0.5
 --- !u!1 &761514551
 GameObject:
   m_ObjectHideFlags: 0
@@ -917,6 +917,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62897f3299b14c24ac89f66245a1d3a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Forces:
+  - Vector: {x: 0, y: -100}
+    NodeIndex: 2
+  AnimationMode: 1
+  NewMarkBeta: 0.25
+  NewMarkGamma: 0.5
   Nodes:
   - Position: {x: 0, y: 0}
     Fixed: 1
@@ -933,12 +939,6 @@ MonoBehaviour:
     NodeIdxB: 1
     NodeIdxC: 2
     PoissonRatio: 0.49
-  Forces:
-  - Vector: {x: 0, y: -100}
-    NodeIndex: 2
-  AnimationMode: 1
-  NewMarkBeta: 0.25
-  NewMarkGamma: 0.5
 --- !u!1 &998609142
 GameObject:
   m_ObjectHideFlags: 0
@@ -979,6 +979,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62897f3299b14c24ac89f66245a1d3a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Forces:
+  - Vector: {x: 0, y: -10000}
+    NodeIndex: 2
+  AnimationMode: 1
+  NewMarkBeta: 0.25
+  NewMarkGamma: 0.5
   Nodes:
   - Position: {x: 0, y: 0}
     Fixed: 1
@@ -995,12 +1001,6 @@ MonoBehaviour:
     NodeIdxB: 1
     NodeIdxC: 2
     PoissonRatio: 0.3
-  Forces:
-  - Vector: {x: 0, y: -10000}
-    NodeIndex: 2
-  AnimationMode: 1
-  NewMarkBeta: 0.25
-  NewMarkGamma: 0.5
 --- !u!1 &1040027729
 GameObject:
   m_ObjectHideFlags: 0
@@ -1041,6 +1041,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62897f3299b14c24ac89f66245a1d3a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Forces:
+  - Vector: {x: 0, y: -10000}
+    NodeIndex: 2
+  AnimationMode: 2
+  NewMarkBeta: 0.25
+  NewMarkGamma: 0.5
   Nodes:
   - Position: {x: 0, y: 0}
     Fixed: 1
@@ -1057,12 +1063,6 @@ MonoBehaviour:
     NodeIdxB: 1
     NodeIdxC: 2
     PoissonRatio: 0.3
-  Forces:
-  - Vector: {x: 0, y: -10000}
-    NodeIndex: 2
-  AnimationMode: 2
-  NewMarkBeta: 0.25
-  NewMarkGamma: 0.5
 --- !u!1 &1051060498
 GameObject:
   m_ObjectHideFlags: 0
@@ -1135,6 +1135,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62897f3299b14c24ac89f66245a1d3a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Forces:
+  - Vector: {x: 0, y: -100}
+    NodeIndex: 5
+  AnimationMode: 3
+  NewMarkBeta: 0.25
+  NewMarkGamma: 0.5
   Nodes:
   - Position: {x: 0, y: 0}
     Fixed: 1
@@ -1150,43 +1156,37 @@ MonoBehaviour:
     Fixed: 0
   Elements:
   - Thickness: 0.001
-    YoungModulusGPa: 0.7
-    Density: 0
-    DampingCoefficient: 0
+    YoungModulusGPa: 0.01
+    Density: 1000
+    DampingCoefficient: 10
     NodeIdxA: 0
     NodeIdxB: 1
     NodeIdxC: 2
     PoissonRatio: 0.3
   - Thickness: 0.001
-    YoungModulusGPa: 0.7
-    Density: 0
-    DampingCoefficient: 0
+    YoungModulusGPa: 0.01
+    Density: 1000
+    DampingCoefficient: 10
     NodeIdxA: 1
     NodeIdxB: 2
     NodeIdxC: 3
     PoissonRatio: 0.3
   - Thickness: 0.001
-    YoungModulusGPa: 0.7
-    Density: 0
-    DampingCoefficient: 0
+    YoungModulusGPa: 0.01
+    Density: 1000
+    DampingCoefficient: 10
     NodeIdxA: 3
     NodeIdxB: 2
     NodeIdxC: 4
     PoissonRatio: 0.3
   - Thickness: 0.001
-    YoungModulusGPa: 0.7
-    Density: 0
-    DampingCoefficient: 0
+    YoungModulusGPa: 0.01
+    Density: 1000
+    DampingCoefficient: 10
     NodeIdxA: 4
     NodeIdxB: 3
     NodeIdxC: 5
     PoissonRatio: 0.3
-  Forces:
-  - Vector: {x: 0, y: -10000}
-    NodeIndex: 5
-  AnimationMode: 3
-  NewMarkBeta: 0.25
-  NewMarkGamma: 0.5
 --- !u!1 &1318738784
 GameObject:
   m_ObjectHideFlags: 0
@@ -1403,6 +1403,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62897f3299b14c24ac89f66245a1d3a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Forces:
+  - Vector: {x: 0, y: -10000}
+    NodeIndex: 2
+  AnimationMode: 0
+  NewMarkBeta: 0.25
+  NewMarkGamma: 0.5
   Nodes:
   - Position: {x: 0, y: 0}
     Fixed: 1
@@ -1419,12 +1425,6 @@ MonoBehaviour:
     NodeIdxB: 1
     NodeIdxC: 2
     PoissonRatio: 0.3
-  Forces:
-  - Vector: {x: 0, y: -10000}
-    NodeIndex: 2
-  AnimationMode: 0
-  NewMarkBeta: 0.25
-  NewMarkGamma: 0.5
 --- !u!1 &1576839232
 GameObject:
   m_ObjectHideFlags: 0
@@ -1616,6 +1616,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62897f3299b14c24ac89f66245a1d3a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Forces:
+  - Vector: {x: 0, y: -100}
+    NodeIndex: 5
+  AnimationMode: 2
+  NewMarkBeta: 0.25
+  NewMarkGamma: 0.5
   Nodes:
   - Position: {x: 0, y: 0}
     Fixed: 1
@@ -1631,43 +1637,37 @@ MonoBehaviour:
     Fixed: 0
   Elements:
   - Thickness: 0.001
-    YoungModulusGPa: 0.7
-    Density: 0
-    DampingCoefficient: 0
+    YoungModulusGPa: 0.01
+    Density: 1000
+    DampingCoefficient: 10
     NodeIdxA: 0
     NodeIdxB: 1
     NodeIdxC: 2
     PoissonRatio: 0.3
   - Thickness: 0.001
-    YoungModulusGPa: 0.7
-    Density: 0
-    DampingCoefficient: 0
+    YoungModulusGPa: 0.01
+    Density: 1000
+    DampingCoefficient: 10
     NodeIdxA: 1
     NodeIdxB: 2
     NodeIdxC: 3
     PoissonRatio: 0.3
   - Thickness: 0.001
-    YoungModulusGPa: 0.7
-    Density: 0
-    DampingCoefficient: 0
+    YoungModulusGPa: 0.01
+    Density: 1000
+    DampingCoefficient: 10
     NodeIdxA: 3
     NodeIdxB: 2
     NodeIdxC: 4
     PoissonRatio: 0.3
   - Thickness: 0.001
-    YoungModulusGPa: 0.7
-    Density: 0
-    DampingCoefficient: 0
+    YoungModulusGPa: 0.01
+    Density: 1000
+    DampingCoefficient: 10
     NodeIdxA: 4
     NodeIdxB: 3
     NodeIdxC: 5
     PoissonRatio: 0.3
-  Forces:
-  - Vector: {x: 0, y: -10000}
-    NodeIndex: 5
-  AnimationMode: 2
-  NewMarkBeta: 0.25
-  NewMarkGamma: 0.5
 --- !u!1 &1733808557
 GameObject:
   m_ObjectHideFlags: 0

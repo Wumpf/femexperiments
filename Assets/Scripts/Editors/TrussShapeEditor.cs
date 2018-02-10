@@ -1,10 +1,9 @@
-﻿using System;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 using System.Linq;
 
 [CustomEditor(typeof(TrussShape))]
-class TrussShapeEditor : Editor
+class TrussShapeEditor : ShapeEditor<TrussElement> 
 {
     private int selectedNode = 0;
 
@@ -102,37 +101,6 @@ class TrussShapeEditor : Editor
                     node.Position = new Vector2(newTargetPosition.x, newTargetPosition.y);
                     targetShape.Nodes[i] = node;
                 }
-            }
-        }
-    }
-
-    private void ExposeAverageValue(Func<float> get, Action<float> set, string name)
-    {
-        float average = get();
-        float newAverage = EditorGUILayout.FloatField(name, average);
-        if (newAverage != average)
-        {
-            EditorGUI.BeginChangeCheck();
-            set(newAverage);
-            EditorGUI.EndChangeCheck();
-            Undo.RecordObject(target, $"Change {name}.");
-        }
-    }
-
-    private bool averageFoldout = true;
-
-    public override void OnInspectorGUI()
-    {
-        DrawDefaultInspector();
-
-        averageFoldout = EditorGUILayout.Foldout(averageFoldout, "Average Element values");
-        if (averageFoldout)
-        {
-            using (var scope = new EditorGUI.IndentLevelScope(1))
-            {
-                ExposeAverageValue(() => AverageYoungModulus, x => AverageYoungModulus = x, "AverageYoungModulus");
-                ExposeAverageValue(() => AverageDensity, x => AverageDensity = x, "AverageDensity");
-                ExposeAverageValue(() => AverageDamping, x => AverageDamping = x, "AverageDamping");
             }
         }
     }

@@ -37,7 +37,7 @@ public abstract class FEMShape2D<TElementType> : MonoBehaviour
     private Vector<float> nodeSpeed;
     private Vector<float> nodeAcceleration;
 
-    private void InitState()
+    private void ResetState()
     {
         // Estimate d_-1 using euler time formula. F=ma => a = F/m
         var test = ComputeGlobalConsistentMassMatrix();
@@ -53,7 +53,7 @@ public abstract class FEMShape2D<TElementType> : MonoBehaviour
 
     protected virtual void Start()
     {
-        InitState();
+        ResetState();
     }
 
     private void UpdateStatic()
@@ -73,6 +73,8 @@ public abstract class FEMShape2D<TElementType> : MonoBehaviour
     // * acceleration = displacement''
     // * speed = displacement'
 
+    private const int numIterationsPerUpdateForExplicitAnalysis = 30; 
+    
     private void UpdateDynamicExplicit_Consistent(float dT)
     {
         // https://www.youtube.com/watch?v=YqynfK8qwFI&t=202s - Schuster Engineering, FEA 22: Transient Explicit
@@ -81,9 +83,8 @@ public abstract class FEMShape2D<TElementType> : MonoBehaviour
         var damping = ComputeGlobalConsistentDampingMatrix();
         var mass = ComputeGlobalConsistentMassMatrix();
 
-        const int numIterations = 10;
-        dT /= numIterations;
-        for (int i = 0; i < numIterations; ++i)
+        dT /= numIterationsPerUpdateForExplicitAnalysis;
+        for (int i = 0; i < numIterationsPerUpdateForExplicitAnalysis; ++i)
         {
             float dTInvSq = 1.0f / (dT * dT);
             float dTInv2 = 1.0f / (dT * 2.0f);
@@ -114,9 +115,8 @@ public abstract class FEMShape2D<TElementType> : MonoBehaviour
         var damping = ComputeGlobalLumpedDampingVector();
         var mass = ComputeGlobalLumpedMassVector();
 
-        const int numIterations = 20;
-        dT /= numIterations;
-        for (int i = 0; i < numIterations; ++i)
+        dT /= numIterationsPerUpdateForExplicitAnalysis;
+        for (int i = 0; i < numIterationsPerUpdateForExplicitAnalysis; ++i)
         {
             float dTInvSq = 1.0f / (dT * dT);
             float dTInv2 = 1.0f / (dT * 2.0f);
@@ -180,6 +180,9 @@ public abstract class FEMShape2D<TElementType> : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (Input.GetKeyDown(KeyCode.R))
+            ResetState();
+        
         switch (AnimationMode)
         {
             case Animation.DynamicExplicitLumped:

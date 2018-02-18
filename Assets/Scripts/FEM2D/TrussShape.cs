@@ -13,18 +13,7 @@ public class TrussShape : FEMShape2D<TrussElement>
 {
     protected override int NodesPerElement => 2;
 
-    public Vector2 GetNodeWorldPosition(int nodeIdx)
-    {
-        if (nodeIdx < 0 || nodeIdx >= Nodes.Count)
-            return Vector2.zero;
-        
-        var pos = Nodes[nodeIdx].Position + transform.position.To2D();
-        if (nodeDisplacement != null)
-            pos += new Vector2(nodeDisplacement[nodeIdx * 2], nodeDisplacement[nodeIdx * 2 + 1]);
-        return pos;
-    }
-
-    private void OnDrawGizmos()
+    protected override void OnDrawGizmos()
     {
         // Elements
         Gizmos.color = Color.black;
@@ -32,6 +21,8 @@ public class TrussShape : FEMShape2D<TrussElement>
         {
             Gizmos.DrawLine(GetNodeWorldPosition(e.RightNodeIdx), GetNodeWorldPosition(e.LeftNodeIdx));
         }
+        
+        base.OnDrawGizmos();
     }
     
     protected override void EnsureValidElements()

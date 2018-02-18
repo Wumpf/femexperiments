@@ -319,4 +319,24 @@ public abstract class FEMShape2D<TElementType> : MonoBehaviour
     }
 
     protected abstract void EnsureValidElements();
+    
+    public Vector3 GetNodeWorldPosition(int nodeIdx)
+    {
+        if (nodeIdx < 0 || nodeIdx >= Nodes.Count)
+            return Vector2.zero;
+        
+        var pos = Nodes[nodeIdx].Position;
+        if (nodeDisplacement != null)
+            pos += new Vector2(nodeDisplacement[nodeIdx * 2], nodeDisplacement[nodeIdx * 2 + 1]);
+        
+        return transform.TransformPoint(pos.To3D());
+    }
+    
+    protected virtual void OnDrawGizmos()
+    {
+        for(int i=0; i<Nodes.Count; ++i)
+        {
+            Gizmos.DrawSphere(GetNodeWorldPosition(i), 0.05f);
+        }
+    }
 }

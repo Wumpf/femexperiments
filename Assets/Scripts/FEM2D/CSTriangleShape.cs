@@ -20,18 +20,7 @@ public class CSTriangleShape : FEMShape2D<CSTriangleElement>
             e.FixPointOrder(Nodes);
     }
 
-    private Vector2 GetNodeWorldPosition(int nodeIdx)
-    {
-        if (nodeIdx < 0 || nodeIdx >= Nodes.Count)
-            return Vector2.zero;
-        
-        var pos = Nodes[nodeIdx].Position + transform.position.To2D();
-        if (nodeDisplacement != null)
-            pos += new Vector2(nodeDisplacement[nodeIdx * 2], nodeDisplacement[nodeIdx * 2 + 1]);
-        return pos;
-    }
-
-    private void OnDrawGizmos()
+    protected override void OnDrawGizmos()
     {
         // Elements
         Gizmos.color = Color.black;
@@ -41,6 +30,8 @@ public class CSTriangleShape : FEMShape2D<CSTriangleElement>
             Gizmos.DrawLine(GetNodeWorldPosition(e.NodeIdxB), GetNodeWorldPosition(e.NodeIdxC));
             Gizmos.DrawLine(GetNodeWorldPosition(e.NodeIdxC), GetNodeWorldPosition(e.NodeIdxA));
         }
+
+        base.OnDrawGizmos();
     }
     
     protected override void EnsureValidElements()

@@ -7,37 +7,6 @@ class TrussShapeEditor : ShapeEditor<TrussElement>
 {
     private int selectedNode = 0;
 
-    public bool ShowLables { get; set; } = false;
-    
-    public float AverageYoungModulus
-    {
-        get { return ((TrussShape)target).Elements.Average(x => x.YoungModulusGPa); }
-        set
-        {
-            foreach (var e in ((TrussShape)target).Elements)
-                e.YoungModulusGPa = value;
-        }
-    }
-    public float AverageDensity
-    {
-        get { return ((TrussShape)target).Elements.Average(x => x.Density); }
-        set
-        {
-            foreach (var e in ((TrussShape)target).Elements)
-                e.Density = value;
-        }
-    }
-    public float AverageDamping
-    {
-        get { return ((TrussShape)target).Elements.Average(x => x.DampingCoefficient); }
-        set
-        {
-            foreach (var e in ((TrussShape)target).Elements)
-                e.DampingCoefficient = value;
-        }
-    }
-    
-
     protected virtual void OnSceneGUI()
     {
         TrussShape targetShape = (TrussShape)target;

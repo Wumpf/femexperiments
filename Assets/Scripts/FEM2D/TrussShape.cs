@@ -39,4 +39,19 @@ public class TrussShape : FEMShape2D<TrussElement>
                 Elements[i].RightNodeIdx = Nodes.Count - 1;
         }
     }
+
+    protected override void ApplyGravityToForceVector(Vector<float> forceVector, Vector2 scaledGravity)
+    {
+        foreach (var element in Elements)
+        {
+            // f = g * m = g * (d * l * a)
+            float elementWeight = element.Density * element.CrossSectionalArea * (Nodes[element.LeftNodeIdx].Position - Nodes[element.RightNodeIdx].Position).magnitude * 0.5f;
+            scaledGravity *= elementWeight;
+
+            forceVector[element.LeftNodeIdx*2] += scaledGravity.x;
+            forceVector[element.LeftNodeIdx*2+1] += scaledGravity.y;
+            forceVector[element.RightNodeIdx*2] += scaledGravity.x;
+            forceVector[element.RightNodeIdx*2+1] += scaledGravity.y;
+        }
+    }
 }

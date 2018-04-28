@@ -37,6 +37,17 @@ class ShapeEditor<TElementType> : Editor
         }
     }
 
+    public float AverageThickness
+    {
+        get { return AllElements.Average(x => x.Thickness); }
+        set
+        {
+            foreach (var e in AllElements)
+                e.Thickness = value;
+        }
+    }
+
+
     private void ExposeAverageValue(Func<float> get, Action<float> set, string name)
     {
         float average = get();
@@ -64,6 +75,7 @@ class ShapeEditor<TElementType> : Editor
                 ExposeAverageValue(() => AverageYoungModulus, x => AverageYoungModulus = x, "AverageYoungModulus");
                 ExposeAverageValue(() => AverageDensity, x => AverageDensity = x, "AverageDensity");
                 ExposeAverageValue(() => AverageDamping, x => AverageDamping = x, "AverageDamping");
+                ExposeAverageValue(() => AverageThickness, x => AverageThickness = x, "AverageThickness");
             }
         }
     }

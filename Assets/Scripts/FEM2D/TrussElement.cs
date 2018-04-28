@@ -7,8 +7,8 @@ using UnityEngine;
 [Serializable]
 public class TrussElement : FEMElement2D
 {
-    [Tooltip("Area in square meter.")]
-    public float CrossSectionalArea = 0.01f;    // For a rod: Thickness * Thickness * (float) Math.PI;
+    // Area in square meter
+    public float CrossSectionalArea => Thickness * Thickness * Mathf.PI;
     
     public int LeftNodeIdx;
     public int RightNodeIdx;

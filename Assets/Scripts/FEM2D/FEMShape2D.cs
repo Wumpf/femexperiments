@@ -301,16 +301,14 @@ public abstract class FEMShape2D<TElementType> : MonoBehaviour
             forceVector[f.NodeIndex * 2] += f.Vector.x;
             forceVector[f.NodeIndex * 2 + 1] += f.Vector.y;
         }
-        
+
         var scaledGravity = Physics2D.gravity * GravityScale;
-        for (int i = 0; i < forceVector.Count-1; ++i)
-        {
-            forceVector[i] += scaledGravity.x;
-            forceVector[i + 1] += scaledGravity.y;
-        }
+        ApplyGravityToForceVector(forceVector, scaledGravity);
 
         return forceVector;
     }
+
+    protected abstract void ApplyGravityToForceVector(Vector<float> forceVector, Vector2 scaledGravity);
 
     private void OnValidate()
     {

@@ -51,4 +51,21 @@ public class CSTriangleShape : FEMShape2D<CSTriangleElement>
                 e.NodeIdxB = Nodes.Count - 1;
         }
     }
+
+    protected override void ApplyGravityToForceVector(Vector<float> forceVector, Vector2 scaledGravity)
+    {
+        foreach (var element in Elements)
+        {
+            // Load is equally distributed on all nodes.
+            float elementWeight = element.GetTotalMass(Nodes) / 3.0f;
+            scaledGravity *= elementWeight;
+
+            forceVector[element.NodeIdxA*2] += scaledGravity.x;
+            forceVector[element.NodeIdxA*2+1] += scaledGravity.y;
+            forceVector[element.NodeIdxB*2] += scaledGravity.x;
+            forceVector[element.NodeIdxB*2+1] += scaledGravity.y;
+            forceVector[element.NodeIdxC*2] += scaledGravity.x;
+            forceVector[element.NodeIdxC*2+1] += scaledGravity.y;
+        }
+    }
 }

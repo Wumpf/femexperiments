@@ -47,7 +47,7 @@ public class CSTriangleElement : FEMElement2D
         return (p13.x * p23.y - p23.x * p13.y) * 0.5f;
     }
 
-    private float GetTotalMass(IList<Node> nodes)
+    public float GetTotalMass(IList<Node> nodes)
     {
         return Density * GetArea(nodes) * Thickness;
     }
@@ -89,9 +89,14 @@ public class CSTriangleElement : FEMElement2D
 
     public override Matrix<float> GetConsistentMassMatrix(IList<Node> nodes)
     {
-        return GetTotalMass(nodes) / 12.0f * DenseMatrix.OfArray(new float[,]
+        return GetTotalMass(nodes) / 12.0f * DenseMatrix.OfArray(new [,]
         {
-            {2.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f}, {0.0f, 2.0f, 0.0f, 1.0f, 0.0f, 1.0f}, {1.0f, 0.0f, 2.0f, 0.0f, 1.0f, 0.0f}, {0.0f, 1.0f, 0.0f, 2.0f, 0.0f, 1.0f}, {1.0f, 0.0f, 1.0f, 0.0f, 2.0f, 0.0f}, {0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 2.0f}
+            {2.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f},
+            {0.0f, 2.0f, 0.0f, 1.0f, 0.0f, 1.0f},
+            {1.0f, 0.0f, 2.0f, 0.0f, 1.0f, 0.0f},
+            {0.0f, 1.0f, 0.0f, 2.0f, 0.0f, 1.0f},
+            {1.0f, 0.0f, 1.0f, 0.0f, 2.0f, 0.0f},
+            {0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 2.0f}
         });
     }
 
@@ -105,9 +110,14 @@ public class CSTriangleElement : FEMElement2D
 
     public override Matrix<float> GetConsistentDampingMatrix(IList<Node> nodes)
     {
-        return DampingCoefficient / 12.0f * DenseMatrix.OfArray(new float[,]
+        return DampingCoefficient / 12.0f * DenseMatrix.OfArray(new [,]
         {
-            {2.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f}, {0.0f, 2.0f, 0.0f, 1.0f, 0.0f, 1.0f}, {1.0f, 0.0f, 2.0f, 0.0f, 1.0f, 0.0f}, {0.0f, 1.0f, 0.0f, 2.0f, 0.0f, 1.0f}, {1.0f, 0.0f, 1.0f, 0.0f, 2.0f, 0.0f}, {0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 2.0f}
+            {2.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f},
+            {0.0f, 2.0f, 0.0f, 1.0f, 0.0f, 1.0f},
+            {1.0f, 0.0f, 2.0f, 0.0f, 1.0f, 0.0f},
+            {0.0f, 1.0f, 0.0f, 2.0f, 0.0f, 1.0f},
+            {1.0f, 0.0f, 1.0f, 0.0f, 2.0f, 0.0f},
+            {0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 2.0f}
         });
     }
 

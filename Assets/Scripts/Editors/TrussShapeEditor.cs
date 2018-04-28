@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Linq;
 
 [CustomEditor(typeof(TrussShape))]
+[CanEditMultipleObjects]
 class TrussShapeEditor : ShapeEditor<TrussElement> 
 {
     private int selectedNode = 0;
@@ -11,9 +12,7 @@ class TrussShapeEditor : ShapeEditor<TrussElement>
     {
         TrussShape targetShape = (TrussShape)target;
         if (targetShape == null)
-        {
             return;
-        }
 
         GUIStyle style = new GUIStyle();
         style.normal.textColor = Color.green;

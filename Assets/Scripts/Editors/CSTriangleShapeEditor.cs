@@ -8,6 +8,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 [CustomEditor(typeof(CSTriangleShape))]
+[CanEditMultipleObjects]
  class CSTriangleShapeEditor : ShapeEditor<CSTriangleElement>
  {
      private bool showBlobGenerator = false;
@@ -19,7 +20,8 @@ using Random = UnityEngine.Random;
          
          EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
  
-         BlobGeneratorUI();
+         if(targets.Length == 1)
+            BlobGeneratorUI();
      }
  
      private void BlobGeneratorUI()

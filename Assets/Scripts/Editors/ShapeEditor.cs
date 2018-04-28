@@ -1,34 +1,38 @@
 ﻿using System;
 using UnityEditor;
 using System.Linq;
+using System.Collections.Generic;
 
 class ShapeEditor<TElementType> : Editor
     where TElementType : FEMElement2D
 {
+    private IEnumerable<TElementType> AllElements =>
+        targets.Cast<FEMShape2D<TElementType>>().SelectMany(x => x.Elements); 
+
     public float AverageYoungModulus
     {
-        get { return ((FEMShape2D<TElementType>)target).Elements.Average(x => x.YoungModulusGPa); }
+        get { return AllElements.Average(x => x.YoungModulusGPa); }
         set
         {
-            foreach (var e in ((FEMShape2D<TElementType>)target).Elements)
+            foreach (var e in AllElements)
                 e.YoungModulusGPa = value;
         }
     }
     public float AverageDensity
     {
-        get { return ((FEMShape2D<TElementType>)target).Elements.Average(x => x.Density); }
+        get { return AllElements.Average(x => x.Density); }
         set
         {
-            foreach (var e in ((FEMShape2D<TElementType>)target).Elements)
+            foreach (var e in AllElements)
                 e.Density = value;
         }
     }
     public float AverageDamping
     {
-        get { return ((FEMShape2D<TElementType>)target).Elements.Average(x => x.DampingCoefficient); }
+        get { return AllElements.Average(x => x.DampingCoefficient); }
         set
         {
-            foreach (var e in ((FEMShape2D<TElementType>)target).Elements)
+            foreach (var e in AllElements)
                 e.DampingCoefficient = value;
         }
     }

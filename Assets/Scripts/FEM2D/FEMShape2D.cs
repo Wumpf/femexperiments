@@ -12,6 +12,8 @@ public abstract class FEMShape2D<TElementType> : MonoBehaviour
 {
     public Force[] Forces = new Force[0];
 
+    public float GravityScale = 1.0f;
+    
     public enum Animation
     {
         DynamicImplicit,
@@ -293,11 +295,18 @@ public abstract class FEMShape2D<TElementType> : MonoBehaviour
     private Vector<float> ComputeForceVector()
     {
         Vector<float> forceVector = DenseVector.Create(Nodes.Count * 2, 0.0f);
-
+        
         foreach (var f in Forces)
         {
             forceVector[f.NodeIndex * 2] += f.Vector.x;
             forceVector[f.NodeIndex * 2 + 1] += f.Vector.y;
+        }
+        
+        var scaledGravity = Physics2D.gravity * GravityScale;
+        for (int i = 0; i < forceVector.Count-1; ++i)
+        {
+            forceVector[i] += scaledGravity.x;
+            forceVector[i + 1] += scaledGravity.y;
         }
 
         return forceVector;

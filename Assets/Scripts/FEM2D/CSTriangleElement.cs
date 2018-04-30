@@ -110,21 +110,15 @@ public class CSTriangleElement : FEMElement2D
 
     public override Matrix<float> GetConsistentDampingMatrix(IList<Node> nodes)
     {
-        return DampingCoefficient / 12.0f * DenseMatrix.OfArray(new [,]
-        {
-            {2.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f},
-            {0.0f, 2.0f, 0.0f, 1.0f, 0.0f, 1.0f},
-            {1.0f, 0.0f, 2.0f, 0.0f, 1.0f, 0.0f},
-            {0.0f, 1.0f, 0.0f, 2.0f, 0.0f, 1.0f},
-            {1.0f, 0.0f, 1.0f, 0.0f, 2.0f, 0.0f},
-            {0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 2.0f}
-        });
+        // Mass proportional damping
+        return GetConsistentMassMatrix(nodes) * DampingCoefficient;
     }
 
     /// <remarks>See GetLumpedMassvector</remarks>
     public override Vector<float> GetLumpedDampingVector(IList<Node> nodes)
     {
-        return DenseVector.Create(6, DampingCoefficient / 3.0f);
+        // Mass proportional damping
+        return GetLumpedMassVector(nodes) * DampingCoefficient;
     }
 
     public override int LocalComponentIndexToGlobal(int local)

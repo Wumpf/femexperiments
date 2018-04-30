@@ -85,19 +85,14 @@ public class TrussElement : FEMElement2D
     
     public override  Matrix<float> GetConsistentDampingMatrix(IList<Node> nodes)
     {
-        Vector2 dir;
-        float length;
-        GetDirAndLength(nodes, out dir, out length);
-        
-        var dampingMatrix1d =  DenseMatrix.OfArray(new[,] {{DampingCoefficient * 2 / 6.0f, DampingCoefficient / 6.0f}, 
-                                                           {DampingCoefficient / 6.0f, DampingCoefficient * 2 / 6.0f}});
-        var rotationMatrix = GetRotationMatrix(dir);
-        return rotationMatrix * dampingMatrix1d * rotationMatrix.Transpose();
+        // Mass proportional damping
+        return GetConsistentMassMatrix(nodes) * DampingCoefficient;
     }
 
     public override Vector<float> GetLumpedDampingVector(IList<Node> nodes)
     {
-        return DenseVector.OfArray(new[] {DampingCoefficient / 4, DampingCoefficient / 4, DampingCoefficient / 4, DampingCoefficient / 4});
+        // Mass proportional damping
+        return GetLumpedMassVector(nodes) * DampingCoefficient;
     }
 
     public override int LocalComponentIndexToGlobal(int local)

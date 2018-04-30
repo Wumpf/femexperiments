@@ -15,17 +15,19 @@ https://www.youtube.com/watch?v=lrpj3cZrKn4
 https://www.youtube.com/watch?v=sSaUHDQf204&t=2s
 * Pretty slides about CST triangle elements  
 http://www.fkm.utm.my/~taminmn/SME%203033%20Finite%20Element%20Method/07-CST%20elements.pdf
-* Book + Slides on Introduction to FEM  
+* Extensive lecture nodes + Slides on Introduction to FEM by University of Colorado
 http://kis.tu.kielce.pl//mo/COLORADO_FEM/colorado/Home.html  
 Selected chapters:  
     * On mass matrices. Containst among other useful things the derivation of (consistent) mass matrices for CST and LST triangle elements  
     http://kis.tu.kielce.pl/mo/COLORADO_FEM/colorado/IFEM.Ch31.pdf
+* On damping by another lecture at University of Colorado  
+https://www.colorado.edu/engineering/cas/courses.d/IADYN.d/ASEN5022.Lecture.18.2005.pdf
 
 ## Dependencies
 
 * This is a Unity3D project  
 https://unity3d.com/
-* MathNet  
+* Numerics, MathNet  
 https://numerics.mathdotnet.com/
 
 ## Licensing
